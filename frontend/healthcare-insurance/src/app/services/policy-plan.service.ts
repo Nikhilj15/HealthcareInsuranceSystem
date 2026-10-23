@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -21,7 +21,7 @@ export interface PolicyPlanRequest {
 })
 export class PolicyPlanService {
 
-  private readonly apiUrl = '/api/policy-plans';
+  private readonly apiUrl = 'https://insurecare-backend.onrender.com/api/policy-plans';
 
   constructor(
     private http: HttpClient
