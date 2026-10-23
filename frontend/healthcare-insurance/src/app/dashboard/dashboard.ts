@@ -98,7 +98,7 @@ export class Dashboard implements OnInit {
 
     this.http.get<DashboardStats>(
 
-      'http://localhost:8080/api/admin/dashboard/stats'
+      'https://insurecare-backend.onrender.com/api/admin/dashboard/stats'
 
     )
     .subscribe({
@@ -168,7 +168,7 @@ export class Dashboard implements OnInit {
 
     this.http.get<RecentActivity[]>(
 
-      'http://localhost:8080/api/admin/dashboard/recent-activities'
+      'https://insurecare-backend.onrender.com/api/admin/dashboard/recent-activities'
 
     )
     .subscribe({

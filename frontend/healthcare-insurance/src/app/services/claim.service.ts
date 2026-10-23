@@ -26,7 +26,7 @@ export interface ClaimResponse {
 export class ClaimService {
 
   private apiUrl =
-    'http://localhost:8080/api/claims';
+    'https://insurecare-backend.onrender.com/api/claims';
 
   constructor(
     private http: HttpClient

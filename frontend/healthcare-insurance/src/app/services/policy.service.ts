@@ -40,7 +40,7 @@ export class PolicyService {
    * - Payment / Purchase Policy
    */
   private userApiUrl =
-    'http://localhost:8080/api/policies';
+    'https://insurecare-backend.onrender.com/api/policies';
 
 
   /*
@@ -51,7 +51,7 @@ export class PolicyService {
    * Search and filters are handled here.
    */
   private adminApiUrl =
-    'http://localhost:8080/api/admin/policies';
+    'https://insurecare-backend.onrender.com/api/admin/policies';
 
 
   constructor(

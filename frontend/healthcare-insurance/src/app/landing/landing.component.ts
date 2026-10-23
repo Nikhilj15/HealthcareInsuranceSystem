@@ -43,7 +43,7 @@ export class LandingComponent implements OnInit {
 
   // Important: use the actual API URL.
   private readonly plansApiUrl =
-    'http://localhost:8080/api/policy-plans';
+    'https://insurecare-backend.onrender.com/api/policy-plans';
 
   plans: PolicyPlan[] = [];
 

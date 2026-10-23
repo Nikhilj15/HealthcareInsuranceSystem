@@ -41,7 +41,7 @@ interface UpdateProfileRequest {
 })
 export class Profile implements OnInit {
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'https://insurecare-backend.onrender.com/api/users';
 
   isEditing = false;
 

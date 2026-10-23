@@ -74,11 +74,11 @@ export class CustomerService {
 
 
   private apiUrl =
-    'http://localhost:8080/api/admin/customers';
+    'https://insurecare-backend.onrender.com/api/admin/customers';
 
 
   private medicalHistoryUrl =
-    'http://localhost:8080/api/admin';
+    'https://insurecare-backend.onrender.com/api/admin';
 
 
   constructor(
