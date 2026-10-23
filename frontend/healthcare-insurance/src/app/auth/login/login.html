@@ -1,0 +1,277 @@
+
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- BACK TO LANDING PAGE -->
+    <div class="home-navigation">
+      <a routerLink="/" class="back-home-link">
+        <span class="back-arrow">←</span>
+        Back to Home
+      </a>
+    </div>
+
+    <!-- BRAND -->
+    <div class="brand-section">
+
+      <div class="brand-icon">
+        🏥
+      </div>
+
+      <h1>
+        Healthcare Insurance
+      </h1>
+
+      <p>
+        Secure healthcare insurance management
+      </p>
+
+    </div>
+
+    <!-- LOGIN CONTENT -->
+    <div class="login-content">
+
+      <h2>Welcome Back</h2>
+
+      <p class="subtitle">
+        Login to continue
+      </p>
+
+      <!-- USER / ADMIN -->
+      <div class="login-type">
+
+        <button
+          type="button"
+          [class.active]="loginType === 'user'"
+          (click)="loginType = 'user'; clearLoginError()">
+          User
+        </button>
+
+        <button
+          type="button"
+          [class.active]="loginType === 'admin'"
+          (click)="loginType = 'admin'; clearLoginError()">
+          Admin
+        </button>
+
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form
+        (ngSubmit)="login()"
+        #loginForm="ngForm"
+        novalidate>
+
+        <div class="form-group">
+
+          <label for="login-email">
+            Email *
+          </label>
+
+          <input
+            id="login-email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            (input)="clearLoginError()"
+            placeholder="Enter registered email"
+            autocomplete="email"
+            maxlength="150"
+            required>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="login-password">
+            Password *
+          </label>
+
+          <input
+            id="login-password"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            (input)="clearLoginError()"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            minlength="6"
+            maxlength="100"
+            required>
+
+        </div>
+
+        <!-- ERROR MESSAGE -->
+        @if (showErrorMessage) {
+          <div
+            class="error-message"
+            role="alert"
+            aria-live="assertive">
+
+            <span class="error-icon">⚠</span>
+
+            <span class="error-text">
+              {{ errorMessage }}
+            </span>
+
+          </div>
+        }
+
+        <!-- LOGIN BUTTON -->
+        <button
+          type="submit"
+          class="login-btn"
+          [disabled]="isSubmitting">
+
+          @if (isSubmitting) {
+            <span>Signing in...</span>
+          } @else {
+            <span>Login</span>
+          }
+
+        </button>
+
+      </form>
+
+      <!-- FORGOT PASSWORD -->
+      <button
+        type="button"
+        class="forgot-link"
+        (click)="forgotPassword()">
+        Forgot Password?
+      </button>
+
+      <!-- REGISTER: USER ONLY -->
+      @if (loginType === 'user') {
+        <div class="register-link">
+
+          <span>New user?</span>
+
+          <a routerLink="/register">
+            Create an account
+          </a>
+
+        </div>
+      }
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RESET PASSWORD MODAL -->
+@if (showResetPassword) {
+
+  <div class="reset-overlay">
+
+    <section
+      class="reset-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reset-title">
+
+      <div class="reset-header">
+
+        <div>
+
+          <span class="reset-eyebrow">
+            Account recovery
+          </span>
+
+          <h2 id="reset-title">
+            Reset Password
+          </h2>
+
+        </div>
+
+        <button
+          class="reset-close"
+          type="button"
+          aria-label="Close reset password"
+          (click)="closeResetPassword()">
+          ×
+        </button>
+
+      </div>
+
+      <p class="reset-description">
+        Enter your registered email, then create a new password.
+      </p>
+
+      <!-- EMAIL -->
+      <label class="reset-field">
+
+        Email
+
+        <input
+          type="email"
+          name="resetIdentifier"
+          [(ngModel)]="resetIdentifier"
+          placeholder="user@healthcare.com"
+          autocomplete="email"
+          maxlength="150">
+
+      </label>
+
+      <!-- CHECK ACCOUNT -->
+      <button
+        class="reset-request-btn"
+        type="button"
+        (click)="requestReset()">
+        Check Account
+      </button>
+
+      @if (resetMessage) {
+        <p class="reset-message" role="status">
+          {{ resetMessage }}
+        </p>
+      }
+
+      <div class="reset-divider"></div>
+
+      <!-- NEW PASSWORD -->
+      <label class="reset-field">
+
+        New Password
+
+        <input
+          type="password"
+          name="resetPassword"
+          [(ngModel)]="resetPasswordValue"
+          placeholder="At least 8 characters"
+          autocomplete="new-password"
+          minlength="8"
+          maxlength="100">
+
+      </label>
+
+      <!-- CONFIRM PASSWORD -->
+      <label class="reset-field">
+
+        Confirm New Password
+
+        <input
+          type="password"
+          name="resetPasswordConfirmation"
+          [(ngModel)]="resetPasswordConfirmation"
+          placeholder="Repeat new password"
+          autocomplete="new-password"
+          minlength="8"
+          maxlength="100">
+
+      </label>
+
+      <!-- RESET BUTTON -->
+      <button
+        class="reset-submit-btn"
+        type="button"
+        (click)="resetPassword()">
+        Reset Password
+      </button>
+
+    </section>
+
+  </div>
+
+}

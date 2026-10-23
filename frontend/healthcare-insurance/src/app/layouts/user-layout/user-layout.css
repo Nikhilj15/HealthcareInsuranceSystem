@@ -1,0 +1,100 @@
+.user-layout {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.user-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  height: 70px;
+  padding: 0 30px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #2563eb;
+  font-size: 20px;
+}
+
+.brand strong {
+  display: block;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.brand small {
+  display: block;
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.user-navbar nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-navbar nav a {
+  color: #475569;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.user-navbar nav a:hover {
+  color: #2563eb;
+}
+
+.logout-btn {
+  border: 1px solid #fecaca;
+  padding: 8px 13px;
+  border-radius: 7px;
+  background: #fff;
+  color: #dc2626;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.user-content {
+  min-height: calc(100vh - 70px);
+}
+
+@media (max-width: 850px) {
+
+  .user-navbar {
+    padding: 0 15px;
+  }
+
+  .user-navbar nav {
+    gap: 8px;
+  }
+
+  .user-navbar nav a {
+    display: none;
+  }
+
+}

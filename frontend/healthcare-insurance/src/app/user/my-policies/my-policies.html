@@ -1,0 +1,181 @@
+<section class="policies-page">
+
+  <header class="page-heading">
+
+    <div>
+      <span class="eyebrow">Coverage</span>
+
+      <h1>My Policies</h1>
+
+      <p>
+        Review your healthcare protection and start a claim when needed.
+      </p>
+    </div>
+
+    <span class="count-badge">
+      {{ policies.length }}
+      {{ policies.length === 1 ? 'policy' : 'policies' }}
+    </span>
+
+  </header>
+
+
+  <!-- Loading -->
+
+  @if (loading) {
+
+    <div class="empty-state">
+
+      <div>⏳</div>
+
+      <h3>Loading Your Policies...</h3>
+
+      <p>
+        Please wait while we load your policies.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- Error -->
+
+  @if (errorMessage) {
+
+    <div class="empty-state">
+
+      <div>⚠️</div>
+
+      <h3>Unable to Load Policies</h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="claim-button"
+        (click)="loadPolicies()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- Policies -->
+
+  @if (!loading && !errorMessage && policies.length > 0) {
+
+    <div class="policy-list">
+
+      @for (policy of policies; track policy.id) {
+
+        <article class="policy-card">
+
+          <div class="policy-card-top">
+
+            <div>
+
+              <span class="policy-kicker">
+                {{ policy.policyNumber }}
+              </span>
+
+              <h2>
+                {{ policy.plan.name }}
+              </h2>
+
+            </div>
+
+            <span class="status-pill">
+              {{ policy.status }}
+            </span>
+
+          </div>
+
+
+          <div class="policy-facts">
+
+            <div>
+
+              <span>Coverage</span>
+
+              <strong>
+                ₹{{ policy.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>Premium</span>
+
+              <strong>
+                ₹{{ policy.premiumAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>Valid until</span>
+
+              <strong>
+                {{ policy.endDate }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="policy-card-footer">
+
+            <span>
+              Applied {{ policy.appliedAt }}
+            </span>
+
+            <button
+              type="button"
+              class="claim-button"
+              (click)="claimPolicy(policy)"
+              [disabled]="policy.status !== 'APPROVED' && policy.status !== 'ACTIVE'"
+            >
+              Claim Policy
+            </button>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+
+  <!-- No policies -->
+
+  @if (!loading && !errorMessage && policies.length === 0) {
+
+    <div class="empty-state">
+
+      <div>📋</div>
+
+      <h3>No Policies Yet</h3>
+
+      <p>
+        You have not purchased any healthcare insurance policy yet.
+      </p>
+
+    </div>
+
+  }
+
+</section>

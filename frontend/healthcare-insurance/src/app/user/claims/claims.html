@@ -1,0 +1,456 @@
+<div class="claims-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>My Claims</h1>
+
+      <p>
+        View and track your healthcare insurance claims.
+      </p>
+
+      <button
+        class="new-claim-button"
+        type="button"
+        (click)="openClaimForm()">
+
+        New Claim
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="claims-card">
+
+      <div class="empty-state">
+
+        <div>⏳</div>
+
+        <h3>Loading Claims...</h3>
+
+        <p>
+          Please wait while we load your claims.
+        </p>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (!loading && errorMessage) {
+
+    <div class="claims-card">
+
+      <div class="empty-state">
+
+        <div>⚠️</div>
+
+        <h3>Unable to Load Claims</h3>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          class="secondary-button"
+          type="button"
+          (click)="loadMyClaims()">
+
+          Try Again
+
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  @if (!loading && !errorMessage) {
+
+    <div class="claims-card">
+
+      @if (claims.length > 0) {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>Claim ID</th>
+
+                <th>Policy</th>
+
+                <th>Amount</th>
+
+                <th>Reason</th>
+
+                <th>Status</th>
+
+                <th>Submitted Date</th>
+
+                <th>Rejection Reason</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                claim of claims;
+                track claim.id
+              ) {
+
+                <tr>
+
+                  <td>
+
+                    <strong>
+                      {{ claim.claimNumber }}
+                    </strong>
+
+                  </td>
+
+
+                  <td>
+
+                    {{ claim.policyNumber }}
+
+                  </td>
+
+
+                  <td>
+
+                    ₹{{ claim.amount | number }}
+
+                  </td>
+
+
+                  <td>
+
+                    {{ claim.reason }}
+
+                  </td>
+
+
+                  <td>
+
+                    @if (
+                      claim.status === 'PENDING'
+                    ) {
+
+                      <span class="status pending">
+                        Pending
+                      </span>
+
+                    }
+
+                    @else if (
+                      claim.status === 'APPROVED'
+                    ) {
+
+                      <span class="status approved">
+                        Approved
+                      </span>
+
+                    }
+
+                    @else {
+
+                      <span class="status rejected">
+                        Rejected
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <td>
+
+                    {{ claim.claimDate }}
+
+                  </td>
+
+
+                  <td>
+
+                    @if (
+                      claim.status === 'REJECTED'
+                      && claim.rejectionReason
+                    ) {
+
+                      {{ claim.rejectionReason }}
+
+                    }
+
+                    @else {
+
+                      —
+
+                    }
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      @if (claims.length === 0) {
+
+        <div class="empty-state">
+
+          <div>📄</div>
+
+          <h3>No Claims Found</h3>
+
+          <p>
+            You have not submitted any insurance claims yet.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+
+<!-- ==========================================
+     CLAIM FORM MODAL
+========================================== -->
+
+@if (showClaimForm) {
+
+  <div class="modal-overlay">
+
+    <section
+      class="claim-modal"
+      role="dialog"
+      aria-labelledby="claim-title">
+
+      <div class="modal-header">
+
+        <div>
+
+          <span class="eyebrow">
+            New request
+          </span>
+
+          <h2 id="claim-title">
+            Claim Policy
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeClaimForm()">
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <div class="claim-form">
+
+        <!-- POLICY -->
+
+        <label>
+
+          Policy
+
+          <input
+            type="text"
+            [value]="
+              selectedPolicyNumber
+                ? selectedPolicyNumber + ' - ' + selectedPolicyName
+                : 'Select an approved policy'
+            "
+            readonly>
+
+        </label>
+
+
+        <!-- COVERAGE -->
+
+        @if (selectedPolicyCoverage > 0) {
+
+          <small>
+            Available policy coverage:
+            ₹{{ selectedPolicyCoverage | number }}
+          </small>
+
+        }
+
+
+        <!-- CLAIM AMOUNT -->
+
+        <label>
+
+          Claim Amount
+
+          <input
+            type="number"
+            [(ngModel)]="claimForm.claimAmount"
+            min="1"
+            [max]="selectedPolicyCoverage || null"
+            placeholder="50000">
+
+        </label>
+
+
+        <!-- REASON -->
+
+        <label>
+
+          Reason for Claim
+
+          <input
+            type="text"
+            [(ngModel)]="claimForm.reason"
+            maxlength="200"
+            placeholder="Hospitalization expenses">
+
+        </label>
+
+
+        <!-- DESCRIPTION -->
+
+        <label>
+
+          Claim Description
+
+          <textarea
+            rows="4"
+            [(ngModel)]="claimForm.description"
+            maxlength="1000"
+            placeholder="Describe the treatment or medical expenses for which you are claiming.">
+          </textarea>
+
+        </label>
+
+
+        <!-- HOSPITAL NAME -->
+
+        <label>
+
+          Hospital Name
+
+          <input
+            type="text"
+            [(ngModel)]="hospitalName"
+            placeholder="Hospital name">
+
+          <small>
+            Note: Hospital name will be used for the form only in this version.
+          </small>
+
+        </label>
+
+
+        <!-- TREATMENT DETAILS -->
+
+        <label>
+
+          Treatment Details
+
+          <textarea
+            rows="3"
+            [(ngModel)]="treatmentDetails"
+            placeholder="Describe the treatment">
+          </textarea>
+
+          <small>
+            Note: Detailed treatment/document upload can be connected to the backend later.
+          </small>
+
+        </label>
+
+
+        <!-- FILE -->
+
+        <label>
+
+          Supporting Documents
+
+          <input
+            type="file"
+            (change)="selectFile($event)">
+
+          <small>
+            {{ selectedFileName || 'No file selected' }}
+          </small>
+
+        </label>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="secondary-button"
+          type="button"
+          (click)="closeClaimForm()"
+          [disabled]="submitting">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          class="new-claim-button"
+          type="button"
+          (click)="submitClaim()"
+          [disabled]="submitting">
+
+          @if (submitting) {
+
+            Submitting...
+
+          } @else {
+
+            Submit Claim
+
+          }
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+}

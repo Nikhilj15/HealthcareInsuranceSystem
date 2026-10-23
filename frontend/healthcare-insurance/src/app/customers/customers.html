@@ -1,0 +1,1093 @@
+<div class="customers-container">
+
+  <!-- ===================================================== -->
+
+  <!-- HEADER -->
+
+  <!-- ===================================================== -->
+
+  <div class="customers-header">
+
+
+<div>
+  <h2>Customers</h2>
+
+  <p>
+    Manage registered healthcare insurance customers
+  </p>
+</div>
+
+<div class="customer-count">
+
+  <span>
+    Total Customers
+  </span>
+
+  <strong>
+    {{ customers.length }}
+  </strong>
+
+</div>
+
+
+  </div>
+
+  <!-- ===================================================== -->
+
+  <!-- LOADING -->
+
+  <!-- ===================================================== -->
+
+@if (loading) {
+
+
+<div class="state-card">
+
+  <div class="state-icon">
+    ⏳
+  </div>
+
+  <h3>
+    Loading customers...
+  </h3>
+
+  <p>
+    Please wait while customer data is being loaded.
+  </p>
+
+</div>
+
+
+}
+
+  <!-- ===================================================== -->
+
+  <!-- ERROR -->
+
+  <!-- ===================================================== -->
+
+@if (!loading && errorMessage) {
+
+
+<div class="state-card error-state">
+
+  <div class="state-icon">
+    ⚠
+  </div>
+
+  <h3>
+    Unable to load customers
+  </h3>
+
+  <p>
+    {{ errorMessage }}
+  </p>
+
+  <button
+    type="button"
+    class="retry-btn"
+    (click)="retry()">
+
+    Try Again
+
+  </button>
+
+</div>
+
+
+}
+
+  <!-- ===================================================== -->
+
+  <!-- EMPTY -->
+
+  <!-- ===================================================== -->
+
+@if (
+!loading &&
+!errorMessage &&
+customers.length === 0
+) {
+
+
+<div class="state-card">
+
+  <div class="state-icon">
+    👥
+  </div>
+
+  <h3>
+    No customers found
+  </h3>
+
+  <p>
+    No registered customers are available.
+  </p>
+
+</div>
+
+
+}
+
+  <!-- ===================================================== -->
+
+  <!-- CUSTOMER TABLE -->
+
+  <!-- ===================================================== -->
+
+@if (
+!loading &&
+!errorMessage &&
+customers.length > 0
+) {
+
+
+<div class="table-card">
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            #
+          </th>
+
+          <th>
+            Customer
+          </th>
+
+          <th>
+            Email
+          </th>
+
+          <th>
+            Phone
+          </th>
+
+          <th>
+            Gender
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Registered
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        @for (
+          customer of customers;
+          track customer.id;
+          let i = $index
+        ) {
+
+          <tr>
+
+            <!-- ID -->
+
+            <td>
+
+              <span class="customer-id">
+
+                {{ i + 1 }}
+
+              </span>
+
+            </td>
+
+
+            <!-- CUSTOMER -->
+
+            <td>
+
+              <div class="customer-info">
+
+                <div class="avatar">
+
+                  {{ customer.fullName.charAt(0).toUpperCase() }}
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ customer.fullName }}
+                  </strong>
+
+                  <span>
+                    Customer ID: {{ customer.id }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- EMAIL -->
+
+            <td>
+              {{ customer.email }}
+            </td>
+
+
+            <!-- PHONE -->
+
+            <td>
+              {{ customer.phone || '—' }}
+            </td>
+
+
+            <!-- GENDER -->
+
+            <td>
+              {{ customer.gender || '—' }}
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="customer.status === 'ACTIVE'"
+                [class.inactive]="customer.status === 'INACTIVE'">
+
+                {{ customer.status || 'UNKNOWN' }}
+
+              </span>
+
+            </td>
+
+
+            <!-- REGISTERED -->
+
+            <td>
+
+              {{
+                customer.createdAt
+                  ? (customer.createdAt | date:'dd MMM yyyy')
+                  : '—'
+              }}
+
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+              <div class="action-buttons">
+
+                <!-- VIEW DETAILS -->
+
+                <button
+                  type="button"
+                  class="view-btn"
+                  (click)="viewCustomer(customer)">
+
+                  View Details
+
+                </button>
+
+
+                <!-- TOGGLE STATUS -->
+
+                @if (customer.status === 'ACTIVE') {
+
+                  <button
+                    type="button"
+                    class="deactivate-btn"
+                    (click)="toggleCustomerStatus(customer)">
+
+                    Deactivate
+
+                  </button>
+
+                }
+                @else {
+
+                  <button
+                    type="button"
+                    class="activate-btn"
+                    (click)="toggleCustomerStatus(customer)">
+
+                    Activate
+
+                  </button>
+
+                }
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+}
+
+  <!-- ===================================================== -->
+
+  <!-- CUSTOMER DETAILS MODAL -->
+
+  <!-- ===================================================== -->
+
+@if (selectedCustomer) {
+
+
+<div
+  class="modal-backdrop"
+  (click)="closeDetails()">
+
+
+  <div
+    class="details-modal"
+    (click)="$event.stopPropagation()">
+
+
+    <!-- ================================================= -->
+    <!-- MODAL HEADER -->
+    <!-- ================================================= -->
+
+    <div class="modal-header">
+
+      <div>
+
+        <h3>
+          Customer Details
+        </h3>
+
+        <p>
+          Complete customer information
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="closeDetails()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- PROFILE -->
+    <!-- ================================================= -->
+
+    <div class="profile-section">
+
+      <div class="large-avatar">
+
+        {{ selectedCustomer.fullName.charAt(0).toUpperCase() }}
+
+      </div>
+
+
+      <div>
+
+        <h4>
+          {{ selectedCustomer.fullName }}
+        </h4>
+
+        <p>
+          {{ selectedCustomer.email }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CUSTOMER DETAILS -->
+    <!-- ================================================= -->
+
+    <div class="details-grid">
+
+
+      <div class="detail-item">
+
+        <span>
+          Customer ID
+        </span>
+
+        <strong>
+          {{ selectedCustomer.id }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Full Name
+        </span>
+
+        <strong>
+          {{ selectedCustomer.fullName }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Email
+        </span>
+
+        <strong>
+          {{ selectedCustomer.email }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Phone
+        </span>
+
+        <strong>
+          {{ selectedCustomer.phone || 'Not provided' }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Date of Birth
+        </span>
+
+        <strong>
+          {{ selectedCustomer.dateOfBirth || 'Not provided' }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Gender
+        </span>
+
+        <strong>
+          {{ selectedCustomer.gender || 'Not provided' }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Status
+        </span>
+
+        <strong>
+
+          <span
+            class="status-badge"
+            [class.active]="selectedCustomer.status === 'ACTIVE'"
+            [class.inactive]="selectedCustomer.status === 'INACTIVE'">
+
+            {{ selectedCustomer.status || 'UNKNOWN' }}
+
+          </span>
+
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span>
+          Registered On
+        </span>
+
+        <strong>
+
+          {{
+            selectedCustomer.createdAt
+              ? (selectedCustomer.createdAt | date:'dd MMM yyyy')
+              : 'Not available'
+          }}
+
+        </strong>
+
+      </div>
+
+
+      <div class="detail-item address-item">
+
+        <span>
+          Address
+        </span>
+
+        <strong>
+          {{ selectedCustomer.address || 'Not provided' }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MEDICAL HISTORY -->
+    <!-- ================================================= -->
+
+    <div class="medical-history-section">
+
+
+      <!-- MEDICAL HISTORY HEADER -->
+
+      <div class="medical-history-header">
+
+        <div>
+
+          <h4>
+            Medical History
+          </h4>
+
+          <p>
+            Health conditions, diagnosis and treatment records
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="add-medical-btn"
+          (click)="openAddMedicalHistory()">
+
+          + Add Medical History
+
+        </button>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- MEDICAL HISTORY LOADING -->
+      <!-- ================================================= -->
+
+      @if (medicalHistoryLoading) {
+
+        <div class="medical-state">
+
+          ⏳ Loading medical history...
+
+        </div>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- MEDICAL HISTORY ERROR -->
+      <!-- ================================================= -->
+
+      @if (
+        !medicalHistoryLoading &&
+        medicalHistoryError
+      ) {
+
+        <div class="medical-state medical-error">
+
+          {{ medicalHistoryError }}
+
+          <button
+            type="button"
+            class="retry-medical-btn"
+            (click)="loadMedicalHistory(selectedCustomer.id)">
+
+            Retry
+
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- MEDICAL HISTORY EMPTY -->
+      <!-- ================================================= -->
+
+      @if (
+        !medicalHistoryLoading &&
+        !medicalHistoryError &&
+        medicalHistory.length === 0 &&
+        !showMedicalHistoryForm
+      ) {
+
+        <div class="medical-empty">
+
+          <div class="medical-empty-icon">
+            🏥
+          </div>
+
+          <strong>
+            No medical history found
+          </strong>
+
+          <span>
+            Add the customer's medical information here.
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- MEDICAL HISTORY FORM -->
+      <!-- ================================================= -->
+
+      @if (showMedicalHistoryForm) {
+
+        <div class="medical-form">
+
+
+          <div class="medical-form-title">
+
+            <h5>
+
+              @if (editingMedicalHistoryId !== null) {
+
+                Edit Medical History
+
+              }
+              @else {
+
+                Add Medical History
+
+              }
+
+            </h5>
+
+          </div>
+
+
+          <div class="medical-form-grid">
+
+
+            <!-- CONDITION -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Medical Condition *
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="medicalHistoryForm.condition"
+                placeholder="e.g. Diabetes">
+
+            </div>
+
+
+            <!-- DIAGNOSIS DATE -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Diagnosis Date
+              </label>
+
+              <input
+                type="date"
+                [(ngModel)]="medicalHistoryForm.diagnosisDate">
+
+            </div>
+
+
+            <!-- TREATMENT -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Treatment
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="medicalHistoryForm.treatment"
+                placeholder="Treatment details">
+
+            </div>
+
+
+            <!-- DOCTOR -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Doctor Name
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="medicalHistoryForm.doctorName"
+                placeholder="Doctor name">
+
+            </div>
+
+
+            <!-- HOSPITAL -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Hospital Name
+              </label>
+
+              <input
+                type="text"
+                [(ngModel)]="medicalHistoryForm.hospitalName"
+                placeholder="Hospital name">
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="medical-form-field">
+
+              <label>
+                Status
+              </label>
+
+              <select
+                [(ngModel)]="medicalHistoryForm.status">
+
+                <option value="Active">
+                  Active
+                </option>
+
+                <option value="Recovered">
+                  Recovered
+                </option>
+
+                <option value="Under Treatment">
+                  Under Treatment
+                </option>
+
+                <option value="Chronic">
+                  Chronic
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="medical-form-field full-width">
+
+              <label>
+                Notes
+              </label>
+
+              <textarea
+                rows="3"
+                [(ngModel)]="medicalHistoryForm.notes"
+                placeholder="Additional notes"></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- FORM ACTIONS -->
+
+          <div class="medical-form-actions">
+
+
+            <button
+              type="button"
+              class="cancel-medical-btn"
+              (click)="cancelMedicalHistoryForm()">
+
+              Cancel
+
+            </button>
+
+
+            <button
+              type="button"
+              class="save-medical-btn"
+              (click)="saveMedicalHistory()">
+
+              @if (editingMedicalHistoryId !== null) {
+
+                Update Medical History
+
+              }
+              @else {
+
+                Save Medical History
+
+              }
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- MEDICAL HISTORY LIST -->
+      <!-- ================================================= -->
+
+      @if (
+        !medicalHistoryLoading &&
+        !medicalHistoryError &&
+        medicalHistory.length > 0
+      ) {
+
+        <div class="medical-history-list">
+
+
+          @for (
+            history of medicalHistory;
+            track history.id
+          ) {
+
+            <div class="medical-history-card">
+
+
+              <!-- CARD HEADER -->
+
+              <div class="medical-card-header">
+
+                <div>
+
+                  <h5>
+                    {{ history.condition }}
+                  </h5>
+
+                  <span>
+
+                    Diagnosis:
+
+                    {{
+                      history.diagnosisDate
+                        ? (history.diagnosisDate | date:'dd MMM yyyy')
+                        : 'Not provided'
+                    }}
+
+                  </span>
+
+                </div>
+
+
+                <span class="medical-status">
+
+                  {{ history.status || 'Not specified' }}
+
+                </span>
+
+              </div>
+
+
+              <!-- CARD DETAILS -->
+
+              <div class="medical-card-grid">
+
+
+                <div>
+
+                  <span>
+                    Doctor
+                  </span>
+
+                  <strong>
+                    {{ history.doctorName || 'Not provided' }}
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Hospital
+                  </span>
+
+                  <strong>
+                    {{ history.hospitalName || 'Not provided' }}
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Treatment
+                  </span>
+
+                  <strong>
+                    {{ history.treatment || 'Not provided' }}
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Notes
+                  </span>
+
+                  <strong>
+                    {{ history.notes || 'No notes' }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <!-- CARD ACTIONS -->
+
+              <div class="medical-card-actions">
+
+
+                <button
+                  type="button"
+                  class="edit-medical-btn"
+                  (click)="openEditMedicalHistory(history)">
+
+                  Edit
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="delete-medical-btn"
+                  (click)="deleteMedicalHistory(history)">
+
+                  Delete
+
+                </button>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MODAL STATUS ACTION -->
+    <!-- ================================================= -->
+
+    <div class="modal-status-action">
+
+      <span>
+        Account Status
+      </span>
+
+
+      <button
+        type="button"
+        class="modal-status-btn"
+        (click)="toggleCustomerStatus(selectedCustomer)">
+
+        @if (selectedCustomer.status === 'ACTIVE') {
+
+          Deactivate Customer
+
+        }
+        @else {
+
+          Activate Customer
+
+        }
+
+      </button>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MODAL FOOTER -->
+    <!-- ================================================= -->
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="close-modal-btn"
+        (click)="closeDetails()">
+
+        Close
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+}
+
+</div>

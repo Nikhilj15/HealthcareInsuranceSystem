@@ -1,0 +1,53 @@
+<div class="user-layout">
+
+  <header class="user-navbar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        🏥
+      </div>
+
+      <div>
+        <strong>Healthcare Insurance</strong>
+        <small>User Portal</small>
+      </div>
+
+    </div>
+
+    <nav>
+
+      <a routerLink="/user/dashboard">
+        Dashboard
+      </a>
+
+      <a routerLink="/user/policies">
+        My Policies
+      </a>
+
+      <a routerLink="/user/claims">
+        My Claims
+      </a>
+
+      <a routerLink="/user/profile">
+        Profile
+      </a>
+
+      <button
+        class="logout-btn"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
+    </nav>
+
+  </header>
+
+  <main class="user-content">
+
+    <router-outlet></router-outlet>
+
+  </main>
+
+</div>

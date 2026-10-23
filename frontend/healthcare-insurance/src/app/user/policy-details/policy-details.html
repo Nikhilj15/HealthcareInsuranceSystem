@@ -1,0 +1,288 @@
+<section class="policy-details-page">
+
+  @if (loading) {
+
+    <div class="empty-state">
+
+      <div>⏳</div>
+
+      <h3>
+        Loading Policy Details...
+      </h3>
+
+      <p>
+        Please wait while we load the selected insurance plan.
+      </p>
+
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="empty-state">
+
+      <div>⚠️</div>
+
+      <h3>
+        Unable to Load Policy
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="details-btn"
+        (click)="loadPlan()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (
+    plan &&
+    !loading &&
+    !errorMessage
+  ) {
+
+    <div class="details-shell">
+
+      <!-- HEADER -->
+
+      <header class="details-header">
+
+        <div>
+
+          <span class="eyebrow">
+            Healthcare Insurance
+          </span>
+
+          <h1>
+            {{ plan.name }}
+          </h1>
+
+          <p>
+            {{ plan.description }}
+          </p>
+
+        </div>
+
+
+        <span
+          class="status"
+         [class.inactive]="plan.status.toUpperCase() !== 'ACTIVE'"
+        >
+          {{ plan.status }}
+        </span>
+
+      </header>
+
+
+      <!-- PLAN CODE -->
+
+      <div class="plan-code">
+
+        <span>
+          Plan Code
+        </span>
+
+        <strong>
+          {{ plan.planCode }}
+        </strong>
+
+      </div>
+
+
+      <!-- MAIN INFORMATION -->
+
+      <div class="details-grid">
+
+        <!-- PLAN OVERVIEW -->
+
+        <section class="details-card">
+
+          <h2>
+            Plan Overview
+          </h2>
+
+          <p>
+            {{ plan.description }}
+          </p>
+
+
+          <div class="plan-info">
+
+            <div>
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                ₹{{ plan.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Premium
+              </span>
+
+              <strong>
+                ₹{{ plan.premium | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {{ plan.durationYears }} Year
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+
+        <section class="details-card">
+
+          <h2>
+            Benefits
+          </h2>
+
+          <ul class="benefits-list">
+
+            @for (
+              benefit of plan.benefits;
+              track $index
+            ) {
+
+              <li>
+
+                <span>
+                  ✓
+                </span>
+
+                {{ benefit }}
+
+              </li>
+
+            }
+
+          </ul>
+
+        </section>
+
+      </div>
+
+
+      <!-- EXCLUSIONS -->
+
+      <section class="details-card exclusions-card">
+
+        <h2>
+          Exclusions
+        </h2>
+
+        <ul class="exclusions-list">
+
+          @for (
+            exclusion of plan.exclusions;
+            track $index
+          ) {
+
+            <li>
+
+              <span>
+                ✕
+              </span>
+
+              {{ exclusion }}
+
+            </li>
+
+          }
+
+        </ul>
+
+      </section>
+
+
+      <!-- PURCHASE SECTION -->
+
+      <section class="purchase-card">
+
+        <div>
+
+          <span class="purchase-label">
+            Annual Premium
+          </span>
+
+          <strong class="purchase-price">
+            ₹{{ plan.premium | number }}/year
+          </strong>
+
+          <p>
+            Coverage up to
+            ₹{{ plan.coverageAmount | number }}
+          </p>
+
+        </div>
+
+
+        <div class="purchase-actions">
+
+          <!-- BACK BUTTON -->
+
+          <button
+            type="button"
+            class="back-button"
+            routerLink="/user/dashboard"
+          >
+            Back
+          </button>
+
+
+          <!-- BUY BUTTON FOR ACTIVE PLAN -->
+
+          @if (plan.status.toUpperCase() === 'ACTIVE') {
+
+            <button
+              type="button"
+              class="buy-button"
+              (click)="buyPlan()"
+            >
+              Buy This Plan
+            </button>
+
+          }
+
+        </div>
+
+      </section>
+
+    </div>
+
+  }
+
+</section>

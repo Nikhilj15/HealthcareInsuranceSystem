@@ -1,0 +1,1891 @@
+/* =========================================================
+   CUSTOMERS PAGE
+   ========================================================= */
+
+.customers-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.customers-header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+  box-sizing: border-box;
+}
+
+.customers-header h2 {
+  margin: 0;
+  color: #172554;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.customers-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CUSTOMER COUNT
+   ========================================================= */
+
+.customer-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 7px;
+
+  background: #eff6ff;
+
+  white-space: nowrap;
+}
+
+.customer-count span {
+  color: #475569;
+  font-size: 13px;
+}
+
+.customer-count strong {
+  color: #1d4ed8;
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   STATE CARD
+   ========================================================= */
+
+.state-card {
+  width: 100%;
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.state-icon {
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.state-card h3 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.state-card p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.error-state {
+  border-color: #fecaca;
+  background: #fffafa;
+}
+
+.error-state h3 {
+  color: #991b1b;
+}
+
+.retry-btn {
+  margin-top: 15px;
+
+  padding: 8px 15px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================================================
+   CUSTOMER TABLE CARD
+   ========================================================= */
+
+.table-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  box-sizing: border-box;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+   CUSTOMER TABLE
+   ========================================================= */
+
+.table-wrapper table {
+  width: 100%;
+  min-width: 1050px;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  table-layout: fixed;
+}
+
+
+/* =========================================================
+   TABLE COLUMN WIDTHS
+   ========================================================= */
+
+/* # */
+.table-wrapper table th:nth-child(1),
+.table-wrapper table td:nth-child(1) {
+  width: 55px;
+  text-align: center;
+}
+
+/* Customer */
+.table-wrapper table th:nth-child(2),
+.table-wrapper table td:nth-child(2) {
+  width: 210px;
+}
+
+/* Email */
+.table-wrapper table th:nth-child(3),
+.table-wrapper table td:nth-child(3) {
+  width: 225px;
+}
+
+/* Phone */
+.table-wrapper table th:nth-child(4),
+.table-wrapper table td:nth-child(4) {
+  width: 135px;
+}
+
+/* Gender */
+.table-wrapper table th:nth-child(5),
+.table-wrapper table td:nth-child(5) {
+  width: 100px;
+}
+
+/* Status */
+.table-wrapper table th:nth-child(6),
+.table-wrapper table td:nth-child(6) {
+  width: 105px;
+}
+
+/* Registered */
+.table-wrapper table th:nth-child(7),
+.table-wrapper table td:nth-child(7) {
+  width: 135px;
+}
+
+/* Action */
+.table-wrapper table th:nth-child(8),
+.table-wrapper table td:nth-child(8) {
+  width: 220px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.table-wrapper table th {
+  height: 48px;
+
+  padding: 12px 13px;
+
+  background: #f8fafc;
+
+  color: #334155;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-align: left;
+  vertical-align: middle;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.table-wrapper table td {
+  height: 68px;
+
+  padding: 11px 13px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  text-align: left;
+  vertical-align: middle;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  box-sizing: border-box;
+}
+
+.table-wrapper table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-wrapper table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.table-wrapper table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   CUSTOMER INFO
+   ========================================================= */
+
+.customer-info {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  box-sizing: border-box;
+}
+
+.customer-info > div:last-child {
+  min-width: 0;
+
+  flex: 1;
+
+  overflow: hidden;
+}
+
+.customer-info strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.customer-info span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   CUSTOMER AVATAR
+   ========================================================= */
+
+.avatar {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   CUSTOMER ID
+   ========================================================= */
+
+.customer-id {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 24px;
+
+  color: #334155;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+   ========================================================= */
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 70px;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 8px;
+
+  flex-wrap: nowrap;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   VIEW DETAILS BUTTON
+   ========================================================= */
+
+.view-btn {
+  min-width: 105px;
+
+  padding: 8px 13px;
+
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.view-btn:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.view-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* =========================================================
+   DEACTIVATE BUTTON
+   ========================================================= */
+
+.deactivate-btn {
+  min-width: 95px;
+
+  padding: 8px 13px;
+
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #dc2626;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.deactivate-btn:hover {
+  background: #fef2f2;
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+
+
+/* =========================================================
+   ACTIVATE BUTTON
+   ========================================================= */
+
+.activate-btn {
+  min-width: 95px;
+
+  padding: 8px 13px;
+
+  border: 1px solid #16a34a;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #15803d;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+.activate-btn:hover {
+  background: #f0fdf4;
+  border-color: #15803d;
+}
+
+
+/* =========================================================
+   =========================================================
+   CUSTOMER DETAILS MODAL
+   =========================================================
+   ========================================================= */
+
+
+/* =========================================================
+   MODAL BACKDROP
+   ========================================================= */
+
+.modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background: rgba(15, 23, 42, 0.62);
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+
+  animation: modalFadeIn 0.18s ease;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.details-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 1000px;
+
+  max-height: calc(100vh - 50px);
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.22),
+    0 10px 25px rgba(0, 0, 0, 0.10);
+
+  overflow-y: auto;
+overflow-x: hidden;
+
+  box-sizing: border-box;
+
+  animation: modalSlideUp 0.2s ease;
+}
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.modal-header {
+  width: 100%;
+
+  min-height: 78px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px 24px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+.modal-header > div:first-child {
+  min-width: 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+
+  color: #172554;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.modal-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   MODAL CLOSE X BUTTON
+   ========================================================= */
+
+.close-btn {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+
+  background: #ffffff;
+  color: #64748b;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 17px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #fef2f2;
+
+  border-color: #fecaca;
+
+  color: #dc2626;
+}
+
+
+/* =========================================================
+   MODAL BODY
+   ========================================================= */
+
+/*
+   Since your HTML doesn't have a separate modal-body div,
+   the sections themselves will be styled.
+*/
+
+.profile-section,
+.details-grid,
+.medical-history-section,
+.modal-status-action {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PROFILE SECTION
+   ========================================================= */
+
+.profile-section {
+  width: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  margin: 22px 24px 20px;
+
+  padding: 16px 18px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  box-sizing: border-box;
+}
+
+.large-avatar {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.profile-section h4 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+.profile-section p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   CUSTOMER DETAILS GRID
+   ========================================================= */
+
+.details-grid {
+  width: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  margin: 0 24px 25px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DETAIL ITEM
+   ========================================================= */
+
+.detail-item {
+  min-width: 0;
+
+  padding: 13px 16px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+.detail-item:nth-child(odd) {
+  border-right: 1px solid #e5e7eb;
+}
+
+
+/*
+   Remove bottom border from the last row
+*/
+.detail-item:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   DETAIL LABEL
+   ========================================================= */
+
+.detail-item > span:first-child {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   DETAIL VALUE
+   ========================================================= */
+
+.detail-item > strong {
+  display: block;
+
+  min-width: 0;
+
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.45;
+
+  word-break: break-word;
+}
+
+
+/*
+   Status badge inside detail item
+*/
+.detail-item > strong > .status-badge {
+  display: inline-flex;
+
+  margin-top: 0;
+}
+
+
+/* =========================================================
+   ADDRESS
+   ========================================================= */
+
+.detail-item.address-item {
+  grid-column: 1 / -1;
+
+  border-right: none;
+}
+
+.detail-item.address-item > strong {
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   MEDICAL HISTORY SECTION
+   ========================================================= */
+
+.medical-history-section {
+  width: auto;
+
+  margin: 0 24px;
+
+  padding-top: 23px;
+
+  border-top: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MEDICAL HISTORY HEADER
+   ========================================================= */
+
+.medical-history-header {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 17px;
+
+  box-sizing: border-box;
+}
+
+.medical-history-header > div:first-child {
+  min-width: 0;
+}
+
+.medical-history-header h4 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.medical-history-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ADD MEDICAL HISTORY BUTTON
+   ========================================================= */
+
+.add-medical-btn {
+  flex-shrink: 0;
+
+  padding: 9px 14px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition: background 0.2s ease;
+}
+
+.add-medical-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================================================
+   MEDICAL STATE
+   ========================================================= */
+
+.medical-state {
+  width: 100%;
+
+  padding: 18px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.medical-error {
+  color: #b91c1c;
+}
+
+.retry-medical-btn {
+  margin-left: 10px;
+
+  padding: 6px 11px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   EMPTY MEDICAL HISTORY
+   ========================================================= */
+
+.medical-empty {
+  width: 100%;
+
+  min-height: 120px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 25px 18px;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.medical-empty-icon {
+  font-size: 28px;
+}
+
+.medical-empty strong {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.medical-empty span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   MEDICAL FORM
+   ========================================================= */
+
+.medical-form {
+  width: 100%;
+
+  padding: 18px;
+
+  margin-bottom: 16px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  box-sizing: border-box;
+}
+
+.medical-form-title h5 {
+  margin: 0 0 16px;
+
+  color: #1f2937;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.medical-form-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  box-sizing: border-box;
+}
+
+.medical-form-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.medical-form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.medical-form-field label {
+  color: #374151;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.medical-form-field input,
+.medical-form-field select,
+.medical-form-field textarea {
+  width: 100%;
+  min-width: 0;
+
+  padding: 9px 10px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #1f2937;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.medical-form-field input:focus,
+.medical-form-field select:focus,
+.medical-form-field textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+.medical-form-field textarea {
+  min-height: 75px;
+
+  resize: vertical;
+}
+
+.medical-form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.cancel-medical-btn,
+.save-medical-btn {
+  padding: 8px 13px;
+
+  border-radius: 6px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-medical-btn {
+  border: 1px solid #cbd5e1;
+
+  background: #ffffff;
+  color: #374151;
+}
+
+.cancel-medical-btn:hover {
+  background: #f8fafc;
+}
+
+.save-medical-btn {
+  border: 1px solid #16a34a;
+
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.save-medical-btn:hover {
+  background: #15803d;
+}
+
+
+/* =========================================================
+   MEDICAL HISTORY LIST
+   ========================================================= */
+
+.medical-history-list {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MEDICAL HISTORY CARD
+   ========================================================= */
+
+.medical-history-card {
+  width: 100%;
+
+  padding: 17px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+
+  transition: box-shadow 0.2s ease;
+}
+
+.medical-history-card:hover {
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================================================
+   MEDICAL CARD HEADER
+   ========================================================= */
+
+.medical-card-header {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 16px;
+
+  box-sizing: border-box;
+}
+
+.medical-card-header h5 {
+  margin: 0 0 4px;
+
+  color: #111827;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+.medical-card-header > div > span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   MEDICAL STATUS
+   ========================================================= */
+
+.medical-status {
+  flex-shrink: 0;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  background: #dcfce7;
+
+  color: #166534 !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   MEDICAL CARD GRID
+   ========================================================= */
+
+.medical-card-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 15px 25px;
+
+  box-sizing: border-box;
+}
+
+.medical-card-grid > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.medical-card-grid > div > span {
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.35px;
+}
+
+.medical-card-grid > div > strong {
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   MEDICAL CARD ACTIONS
+   ========================================================= */
+
+.medical-card-actions {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 16px;
+  padding-top: 12px;
+
+  border-top: 1px solid #f1f5f9;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   EDIT MEDICAL
+   ========================================================= */
+
+.edit-medical-btn {
+  min-width: 55px;
+
+  padding: 7px 12px;
+
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #2563eb;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.edit-medical-btn:hover {
+  background: #eff6ff;
+}
+
+
+/* =========================================================
+   DELETE MEDICAL
+   ========================================================= */
+
+.delete-medical-btn {
+  min-width: 65px;
+
+  padding: 7px 12px;
+
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #dc2626;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.delete-medical-btn:hover {
+  background: #fef2f2;
+}
+
+
+/* =========================================================
+   MODAL STATUS ACTION
+   ========================================================= */
+
+.modal-status-action {
+  width: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin: 24px 24px 0;
+  padding: 15px 17px;
+
+  border: 1px solid #fee2e2;
+
+  border-radius: 9px;
+
+  background: #fffafa;
+
+  box-sizing: border-box;
+}
+
+.modal-status-action > span {
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MODAL STATUS BUTTON
+   ========================================================= */
+
+.modal-status-btn {
+  flex-shrink: 0;
+
+  padding: 8px 13px;
+
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #dc2626;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.modal-status-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+   ========================================================= */
+
+.modal-footer {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-top: 20px;
+
+  padding: 14px 24px;
+
+  border-top: 1px solid #e5e7eb;
+
+  background: #f8fafc;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CLOSE MODAL BUTTON
+   ========================================================= */
+
+.close-modal-btn {
+  min-width: 80px;
+
+  padding: 8px 15px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.close-modal-btn:hover {
+  background: #f1f5f9;
+}
+
+
+/* =========================================================
+   MODAL ANIMATIONS
+   ========================================================= */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .details-modal {
+    max-width: 95%;
+  }
+
+  .modal-backdrop {
+    padding: 20px;
+  }
+
+  .medical-card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  /* Page header */
+  .customers-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .customer-count {
+    align-self: flex-start;
+  }
+
+
+  /* Modal */
+  .modal-backdrop {
+    padding: 10px;
+  }
+
+  .details-modal {
+    max-width: 100%;
+    max-height: calc(100vh - 20px);
+
+    border-radius: 11px;
+  }
+
+
+  /* Modal header */
+  .modal-header {
+    padding: 15px 17px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-header p {
+    font-size: 12px;
+  }
+
+
+  /* Profile */
+  .profile-section {
+    margin: 16px 17px 18px;
+    padding: 14px;
+  }
+
+
+  /* Customer details */
+  .details-grid {
+    grid-template-columns: 1fr;
+
+    margin: 0 17px 22px;
+  }
+
+  .detail-item {
+    border-right: none !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  .detail-item:last-child {
+    border-bottom: none !important;
+  }
+
+  .detail-item.address-item {
+    grid-column: auto;
+  }
+
+
+  /* Medical */
+  .medical-history-section {
+    margin: 0 17px;
+  }
+
+  .medical-history-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-medical-btn {
+    width: 100%;
+  }
+
+  .medical-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* Account */
+  .modal-status-action {
+    flex-direction: column;
+    align-items: stretch;
+
+    margin: 20px 17px 0;
+  }
+
+  .modal-status-btn {
+    width: 100%;
+  }
+
+
+  /* Footer */
+  .modal-footer {
+    padding: 13px 17px;
+  }
+
+  .close-modal-btn {
+    width: 100%;
+  }
+
+
+  /* Medical form */
+  .medical-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-form-field.full-width {
+    grid-column: auto;
+  }
+
+  .medical-form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-medical-btn,
+  .save-medical-btn {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+  .customers-header h2 {
+    font-size: 23px;
+  }
+
+  .modal-backdrop {
+    padding: 5px;
+  }
+
+  .details-modal {
+    max-height: calc(100vh - 10px);
+  }
+
+  .modal-header {
+    padding: 13px 14px;
+  }
+
+  .profile-section {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .details-grid {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .medical-history-section {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .modal-status-action {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .modal-footer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .medical-history-card {
+    padding: 14px;
+  }
+
+  .medical-card-actions {
+    justify-content: stretch;
+  }
+
+  .edit-medical-btn,
+  .delete-medical-btn {
+    flex: 1;
+  }
+}

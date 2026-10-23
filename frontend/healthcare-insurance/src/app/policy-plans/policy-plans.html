@@ -1,0 +1,721 @@
+<div class="page-container">
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Policy Plans</h2>
+      <p>Create and manage healthcare insurance plans</p>
+    </div>
+
+    <button
+      class="primary-button"
+      type="button"
+      (click)="openAddForm()"
+    >
+      + Add Policy Plan
+    </button>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  @if (loading) {
+
+    <div class="page-message">
+      Loading policy plans...
+    </div>
+
+  }
+
+
+  <!-- ERROR -->
+
+  @if (!loading && errorMessage && !showForm) {
+
+    <div class="error-message">
+
+      <span>
+        {{ errorMessage }}
+      </span>
+
+      <button
+        type="button"
+        (click)="retry()"
+      >
+        Retry
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- PLAN GRID -->
+
+  @if (!loading && policyPlans.length > 0) {
+
+    <div class="plans-grid">
+
+      @for (
+        plan of policyPlans;
+        track plan.id
+      ) {
+
+        <div class="plan-card">
+
+          <div class="plan-card-header">
+
+            <div>
+
+              <span class="plan-code">
+                {{ plan.planCode }}
+              </span>
+
+              <h3>
+                {{ plan.name }}
+              </h3>
+
+            </div>
+
+            <span
+              class="status"
+              [class.active]="plan.status === 'Active'"
+              [class.inactive]="plan.status === 'Inactive'"
+            >
+              {{ plan.status }}
+            </span>
+
+          </div>
+
+
+          <p class="description">
+            {{ plan.description }}
+          </p>
+
+
+          <div class="plan-info">
+
+            <div>
+
+              <span>
+                Premium
+              </span>
+
+              <strong>
+                ₹{{ plan.premium | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                ₹{{ plan.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {{ plan.durationYears }} Years
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="plan-actions">
+
+            <button
+              class="view-button"
+              type="button"
+              (click)="viewPlan(plan)"
+            >
+              View
+            </button>
+
+            <button
+              class="edit-button"
+              type="button"
+              (click)="editPlan(plan)"
+            >
+              Edit
+            </button>
+
+            <button
+              class="delete-button"
+              type="button"
+              (click)="deletePlan(plan)"
+            >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+
+  <!-- NO DATA -->
+
+  @if (
+    !loading &&
+    !errorMessage &&
+    policyPlans.length === 0
+  ) {
+
+    <div class="page-message">
+      No policy plans found.
+    </div>
+
+  }
+
+
+  <!-- ADD / EDIT FORM -->
+
+  @if (showForm) {
+
+    <div class="modal-overlay">
+
+      <div class="form-modal">
+
+        <div class="modal-header">
+
+          <div>
+
+            <h2>
+              {{
+                isEditMode
+                  ? 'Edit Policy Plan'
+                  : 'Add Policy Plan'
+              }}
+            </h2>
+
+            <p>
+              Enter policy plan information
+            </p>
+
+          </div>
+
+
+          <button
+            class="close-button"
+            type="button"
+            (click)="closeForm()"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <!-- BACKEND ERROR -->
+
+        @if (errorMessage) {
+
+          <div class="form-error">
+
+            {{ errorMessage }}
+
+          </div>
+
+        }
+
+
+        <form
+          (ngSubmit)="savePlan()"
+          #planFormRef="ngForm"
+        >
+
+          <div class="form-grid">
+
+
+            <!-- PLAN CODE -->
+
+            <div class="form-group">
+
+              <label>
+                Plan Code *
+              </label>
+
+              <input
+                type="text"
+                name="planCode"
+                [(ngModel)]="planForm.planCode"
+                required
+                maxlength="50"
+                [readonly]="isEditMode"
+                placeholder="e.g. HS001"
+              >
+
+              @if (
+                !planForm.planCode ||
+                !planForm.planCode.trim()
+              ) {
+
+                <small class="error">
+                  Plan Code is required.
+                </small>
+
+              }
+
+              @if (isEditMode) {
+
+                <small>
+                  Plan Code cannot be changed while editing.
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- PLAN NAME -->
+
+            <div class="form-group">
+
+              <label>
+                Plan Name *
+              </label>
+
+              <input
+                type="text"
+                name="name"
+                [(ngModel)]="planForm.name"
+                required
+                maxlength="100"
+                placeholder="e.g. Gold Health Plan"
+              >
+
+              @if (
+                !planForm.name ||
+                !planForm.name.trim()
+              ) {
+
+                <small class="error">
+                  Plan Name is required.
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- PREMIUM -->
+
+            <div class="form-group">
+
+              <label>
+                Premium Amount *
+              </label>
+
+              <input
+                type="number"
+                name="premium"
+                [(ngModel)]="planForm.premium"
+                min="0.01"
+                step="0.01"
+                required
+                placeholder="Enter premium"
+              >
+
+              @if (
+                planForm.premium <= 0
+              ) {
+
+                <small class="error">
+                  Premium must be greater than zero.
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- COVERAGE -->
+
+            <div class="form-group">
+
+              <label>
+                Coverage Amount *
+              </label>
+
+              <input
+                type="number"
+                name="coverageAmount"
+                [(ngModel)]="planForm.coverageAmount"
+                min="0.01"
+                step="0.01"
+                required
+                placeholder="Enter coverage"
+              >
+
+              @if (
+                planForm.coverageAmount <= 0
+              ) {
+
+                <small class="error">
+                  Coverage amount must be greater than zero.
+                </small>
+
+              }
+
+            </div>
+
+
+
+<!-- DURATION -->
+
+<div class="form-group">
+
+  <label>
+    Duration (Years) *
+  </label>
+
+  <input
+    type="number"
+    name="durationYears"
+    [(ngModel)]="planForm.durationYears"
+    min="1"
+    step="1"
+    required
+  >
+
+  @if (
+    planForm.durationYears <= 0
+  ) {
+
+    <small class="error">
+      Duration must be greater than zero.
+    </small>
+
+  }
+
+</div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+              <label>
+                Status
+              </label>
+
+              <select
+                name="status"
+                [(ngModel)]="planForm.status"
+              >
+
+                <option value="Active">
+                  Active
+                </option>
+
+                <option value="Inactive">
+                  Inactive
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group full-width">
+
+              <label>
+                Description *
+              </label>
+
+              <textarea
+                name="description"
+                [(ngModel)]="planForm.description"
+                rows="3"
+                required
+                maxlength="1000"
+                placeholder="Describe the policy plan..."
+              ></textarea>
+
+              @if (
+                !planForm.description ||
+                !planForm.description.trim()
+              ) {
+
+                <small class="error">
+                  Description is required.
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- BENEFITS -->
+
+            <div class="form-group full-width">
+
+              <label>
+                Benefits *
+              </label>
+
+              <input
+                type="text"
+                name="benefits"
+                [ngModel]="getBenefitsText()"
+                (ngModelChange)="setBenefits($event)"
+                placeholder="Hospitalization, Cashless treatment, Emergency treatment"
+              >
+
+              <small>
+                Enter at least one benefit. Separate benefits using commas.
+              </small>
+
+              @if (
+                !planForm.benefits ||
+                planForm.benefits.length === 0
+              ) {
+
+                <small class="error">
+                  At least one benefit is required.
+                </small>
+
+              }
+
+            </div>
+
+
+            <!-- EXCLUSIONS -->
+
+            <div class="form-group full-width">
+
+              <label>
+                Exclusions
+              </label>
+
+              <input
+                type="text"
+                name="exclusions"
+                [ngModel]="getExclusionsText()"
+                (ngModelChange)="setExclusions($event)"
+                placeholder="Cosmetic treatment, Self-inflicted injuries"
+              >
+
+              <small>
+                Optional. Separate exclusions using commas.
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <!-- FOOTER -->
+
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="closeForm()"
+              [disabled]="saving"
+            >
+              Cancel
+            </button>
+
+
+            <button
+              type="submit"
+              class="primary-button"
+              [disabled]="
+                saving ||
+                planFormRef.invalid ||
+                !isFormValid()
+              "
+            >
+
+              @if (saving) {
+                Saving...
+              } @else {
+                {{
+                  isEditMode
+                    ? 'Update Plan'
+                    : 'Save Plan'
+                }}
+              }
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- DETAILS MODAL -->
+
+  @if (
+    showDetails &&
+    selectedPlan
+  ) {
+
+    <div class="modal-overlay">
+
+      <div class="details-modal">
+
+        <div class="modal-header">
+
+          <div>
+
+            <span class="plan-code">
+              {{ selectedPlan.planCode }}
+            </span>
+
+            <h2>
+              {{ selectedPlan.name }}
+            </h2>
+
+          </div>
+
+
+          <button
+            class="close-button"
+            type="button"
+            (click)="closeDetails()"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="details-content">
+
+          <p>
+            {{ selectedPlan.description }}
+          </p>
+
+
+          <div class="detail-cards">
+
+            <div>
+
+              <span>
+                Premium
+              </span>
+
+              <strong>
+                ₹{{ selectedPlan.premium | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                ₹{{ selectedPlan.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {{ selectedPlan.durationYears }} Years
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <h3>
+            Benefits
+          </h3>
+
+          <ul>
+
+            @for (
+              benefit of selectedPlan.benefits;
+              track benefit
+            ) {
+
+              <li>
+                ✓ {{ benefit }}
+              </li>
+
+            }
+
+          </ul>
+
+
+          @if (
+            selectedPlan.exclusions &&
+            selectedPlan.exclusions.length > 0
+          ) {
+
+            <h3>
+              Exclusions
+            </h3>
+
+            <ul>
+
+              @for (
+                exclusion of selectedPlan.exclusions;
+                track exclusion
+              ) {
+
+                <li>
+                  ✕ {{ exclusion }}
+                </li>
+
+              }
+
+            </ul>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

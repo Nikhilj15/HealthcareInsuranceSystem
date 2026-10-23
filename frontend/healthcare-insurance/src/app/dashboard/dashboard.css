@@ -1,0 +1,322 @@
+.dashboard-container {
+  width: 100%;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: #172b4d;
+  font-size: 26px;
+}
+
+.dashboard-header p {
+  margin: 6px 0 0;
+  color: #7b8794;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.stats-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(190px, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+
+.stat-card {
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  padding: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.stat-card:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+
+.stat-icon {
+
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 21px;
+
+  flex-shrink: 0;
+}
+
+
+.stat-icon.blue {
+  background: #eaf2ff;
+}
+
+
+.stat-icon.green {
+  background: #ecfdf5;
+}
+
+
+.stat-icon.teal {
+  background: #ecfeff;
+}
+
+
+.stat-icon.orange {
+  background: #fff7ed;
+}
+
+
+.stat-icon.purple {
+  background: #f5f3ff;
+}
+
+
+.stat-icon.red {
+  background: #fef2f2;
+}
+
+
+.stat-card span {
+
+  display: block;
+
+  color: #7b8794;
+
+  font-size: 12px;
+}
+
+
+.stat-card strong {
+
+  display: block;
+
+  margin-top: 4px;
+
+  color: #172b4d;
+
+  font-size: 25px;
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY CARD
+   ========================================================= */
+
+.activity-card {
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  padding: 22px;
+}
+
+
+.activity-header h3 {
+
+  margin: 0;
+
+  color: #172b4d;
+
+  font-size: 18px;
+}
+
+
+.activity-header p {
+
+  margin: 5px 0 20px;
+
+  color: #7b8794;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   ACTIVITY LIST
+   ========================================================= */
+
+.activity-list {
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.activity-item {
+
+  display: flex;
+
+  gap: 15px;
+
+  padding: 17px 0;
+
+  border-top: 1px solid #edf0f3;
+}
+
+
+.activity-dot {
+
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #2f80ed;
+
+  margin-top: 6px;
+
+  flex-shrink: 0;
+}
+
+
+.activity-content {
+
+  min-width: 0;
+}
+
+
+.activity-content strong {
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+
+.activity-content p {
+
+  margin: 4px 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+.activity-content span {
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   EMPTY ACTIVITY
+   ========================================================= */
+
+.empty-activity {
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  border-top: 1px solid #edf0f3;
+}
+
+
+.empty-icon {
+
+  font-size: 30px;
+
+  margin-bottom: 10px;
+}
+
+
+.empty-activity strong {
+
+  display: block;
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+
+.empty-activity p {
+
+  margin: 5px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .stats-grid {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .stats-grid {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+}

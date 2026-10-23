@@ -1,0 +1,606 @@
+<div class="page-container">
+
+  <!-- ===================================================== -->
+  <!-- PAGE HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Insurance Policies</h2>
+
+      <p>
+        View, search and manage all purchased insurance policies
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- SEARCH + FILTER CARD -->
+  <!-- ===================================================== -->
+
+  <div class="search-filter-card">
+
+    <div class="search-row">
+
+      <!-- GLOBAL SEARCH -->
+
+      <div class="search-box">
+
+        <span class="search-icon">
+          🔍
+        </span>
+
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search by Policy ID, Customer Name or Plan..."
+          (keyup.enter)="searchPolicies()"
+        />
+
+        @if (searchTerm) {
+
+          <button
+            type="button"
+            class="clear-search"
+            (click)="searchTerm = ''; searchPolicies()"
+            title="Clear search">
+
+            ✕
+
+          </button>
+
+        }
+
+      </div>
+
+
+      <!-- SEARCH BUTTON -->
+
+      <button
+        type="button"
+        class="search-button"
+        (click)="searchPolicies()">
+
+        🔍 Search
+
+      </button>
+
+
+      <!-- FILTER BUTTON -->
+
+      <button
+        type="button"
+        class="filter-button"
+        [class.active]="showFilters"
+        (click)="showFilters = !showFilters">
+
+        ⚙ Filters
+
+        @if (activeFilterCount > 0) {
+
+          <span class="filter-count">
+            {{ activeFilterCount }}
+          </span>
+
+        }
+
+      </button>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- FILTER PANEL -->
+    <!-- =================================================== -->
+
+    @if (showFilters) {
+
+      <div class="filter-panel">
+
+        <div class="filter-title-row">
+
+          <div>
+
+            <h4>Filter Policies</h4>
+
+            <p>
+              Filter policies according to specific columns
+            </p>
+
+          </div>
+
+          @if (hasActiveFilters()) {
+
+            <button
+              type="button"
+              class="clear-filter-button"
+              (click)="clearFilters()">
+
+              Clear All
+
+            </button>
+
+          }
+
+        </div>
+
+
+        <div class="filter-grid">
+
+          <!-- POLICY ID -->
+
+          <div class="filter-field">
+
+            <label>
+              Policy ID
+            </label>
+
+            <input
+              type="text"
+              [(ngModel)]="policyNumberFilter"
+              placeholder="e.g. POL-12345678"
+            />
+
+          </div>
+
+
+          <!-- CUSTOMER -->
+
+          <div class="filter-field">
+
+            <label>
+              Customer Name
+            </label>
+
+            <input
+              type="text"
+              [(ngModel)]="customerNameFilter"
+              placeholder="Enter customer name"
+            />
+
+          </div>
+
+
+          <!-- PLAN -->
+
+          <div class="filter-field">
+
+            <label>
+              Plan
+            </label>
+
+            <input
+              type="text"
+              [(ngModel)]="planNameFilter"
+              placeholder="Enter plan name"
+            />
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="filter-field">
+
+            <label>
+              Status
+            </label>
+
+            <select
+              [(ngModel)]="statusFilter">
+
+              <option value="">
+                All Statuses
+              </option>
+
+              <option value="PENDING">
+                Pending
+              </option>
+
+              <option value="APPROVED">
+                Approved
+              </option>
+
+              <option value="ACTIVE">
+                Active
+              </option>
+
+              <option value="REJECTED">
+                Rejected
+              </option>
+
+              <option value="EXPIRED">
+                Expired
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- FILTER ACTIONS -->
+
+        <div class="filter-actions">
+
+          <button
+            type="button"
+            class="apply-filter-button"
+            (click)="applyFilters()">
+
+            Apply Filters
+
+          </button>
+
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="clearFilters()">
+
+            Reset
+
+          </button>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- LOADING -->
+  <!-- ===================================================== -->
+
+  @if (loading) {
+
+    <div class="empty-state">
+
+      <div>
+        ⏳
+      </div>
+
+      <h3>
+        Loading Policies...
+      </h3>
+
+      <p>
+        Please wait while we load insurance policies.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- ERROR -->
+  <!-- ===================================================== -->
+
+  @if (!loading && errorMessage) {
+
+    <div class="empty-state">
+
+      <div>
+        ⚠️
+      </div>
+
+      <h3>
+        Unable to Load Policies
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="retry-button"
+        (click)="loadPolicies()">
+
+        Try Again
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- POLICY TABLE -->
+  <!-- ===================================================== -->
+
+  @if (!loading && !errorMessage) {
+
+    <div class="table-card">
+
+      <div class="table-header">
+
+        <h3>
+          Policy List
+        </h3>
+
+        <span>
+
+          {{ policies.length }}
+
+          {{ policies.length === 1
+            ? 'Policy'
+            : 'Policies'
+          }}
+
+        </span>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- TABLE -->
+      <!-- ================================================= -->
+
+      @if (policies.length > 0) {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Policy ID
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Plan
+                </th>
+
+                <th>
+                  Premium
+                </th>
+
+                <th>
+                  Coverage
+                </th>
+
+                <th>
+                  Start Date
+                </th>
+
+                <th>
+                  Expiry
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                policy of policies;
+                track policy.id
+              ) {
+
+                <tr>
+
+                  <td>
+
+                    <strong>
+                      {{ policy.policyNumber }}
+                    </strong>
+
+                  </td>
+
+
+                  <td>
+                    {{ policy.customerName }}
+                  </td>
+
+
+                  <td>
+                    {{ policy.planName }}
+                  </td>
+
+
+                  <td>
+                    ₹{{ policy.premium | number }}
+                  </td>
+
+
+                  <td>
+                    ₹{{ policy.coverageAmount | number }}
+                  </td>
+
+
+                  <td>
+                    {{ policy.startDate }}
+                  </td>
+
+
+                  <td>
+                    {{ policy.expiryDate }}
+                  </td>
+
+
+                  <td>
+
+                    <span
+                      class="status"
+
+                      [class.active]="
+                        policy.status === 'ACTIVE'
+                      "
+
+                      [class.approved]="
+                        policy.status === 'APPROVED'
+                      "
+
+                      [class.expired]="
+                        policy.status === 'EXPIRED'
+                      "
+
+                      [class.pending]="
+                        policy.status === 'PENDING'
+                      "
+
+                      [class.rejected]="
+                        policy.status === 'REJECTED'
+                      ">
+
+                      {{ policy.status }}
+
+                    </span>
+
+                  </td>
+
+
+                  <td>
+
+                    @if (
+                      policy.status === 'PENDING'
+                    ) {
+
+                      <div class="action-buttons">
+
+                        <button
+                          type="button"
+                          class="approve-button"
+
+                          (click)="
+                            approvePolicy(policy)
+                          "
+
+                          [disabled]="
+                            processingPolicyId === policy.id
+                          ">
+
+                          @if (
+                            processingPolicyId === policy.id
+                          ) {
+
+                            Processing...
+
+                          } @else {
+
+                            Approve
+
+                          }
+
+                        </button>
+
+
+                        <button
+                          type="button"
+                          class="reject-button"
+
+                          (click)="
+                            rejectPolicy(policy)
+                          "
+
+                          [disabled]="
+                            processingPolicyId === policy.id
+                          ">
+
+                          Reject
+
+                        </button>
+
+                      </div>
+
+                    } @else {
+
+                      <span class="no-action">
+                        —
+                      </span>
+
+                    }
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- NO RESULTS -->
+      <!-- ================================================= -->
+
+      @if (policies.length === 0) {
+
+        <div class="empty-state">
+
+          <div>
+            📋
+          </div>
+
+          @if (hasActiveFilters()) {
+
+            <h3>
+              No Policies Match Your Search
+            </h3>
+
+            <p>
+              No policies were found for the selected search or filters.
+            </p>
+
+            <button
+              type="button"
+              class="retry-button"
+              (click)="clearFilters()">
+
+              Clear Filters
+
+            </button>
+
+          } @else {
+
+            <h3>
+              No Policies Found
+            </h3>
+
+            <p>
+              No purchased insurance policies are available.
+            </p>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,312 @@
+<section class="profile-page">
+
+  <header class="page-heading">
+
+    <div>
+
+      <span class="eyebrow">Account</span>
+
+      <h1>My Profile</h1>
+
+      <p>
+        Keep your personal and contact information current.
+      </p>
+
+    </div>
+
+    @if (!isEditing && !loading) {
+
+      <button
+        class="primary-button"
+        type="button"
+        (click)="editProfile()">
+
+        Edit Profile
+
+      </button>
+
+    }
+
+  </header>
+
+
+  @if (loading) {
+
+    <div class="profile-message">
+      Loading profile...
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div
+      class="error-message"
+      role="alert">
+
+      {{ errorMessage }}
+
+    </div>
+
+  }
+
+
+  @if (savedMessage) {
+
+    <p
+      class="saved-message"
+      role="status">
+
+      {{ savedMessage }}
+
+    </p>
+
+  }
+
+
+  @if (!loading && !errorMessage) {
+
+    <div class="profile-grid">
+
+
+      <!-- PERSONAL DETAILS -->
+
+      <section class="profile-section">
+
+        <div class="section-title">
+
+          <span>01</span>
+
+          <h2>Personal Details</h2>
+
+        </div>
+
+
+        <div class="field-grid">
+
+          <label>
+
+            Full Name
+
+            <input
+              type="text"
+              [disabled]="!isEditing"
+              [(ngModel)]="profile.fullName"
+              maxlength="100">
+
+          </label>
+
+
+          <label>
+
+            Date of Birth
+
+            <input
+              type="date"
+              [disabled]="!isEditing"
+              [(ngModel)]="profile.dateOfBirth">
+
+          </label>
+
+
+          <label>
+
+            Gender
+
+            <select
+              [disabled]="!isEditing"
+              [(ngModel)]="profile.gender">
+
+              <option value="">
+                Select Gender
+              </option>
+
+              <option value="Male">
+                Male
+              </option>
+
+              <option value="Female">
+                Female
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+
+            </select>
+
+          </label>
+
+        </div>
+
+      </section>
+
+
+      <!-- CONTACT DETAILS -->
+
+      <section class="profile-section">
+
+        <div class="section-title">
+
+          <span>02</span>
+
+          <h2>Contact Details</h2>
+
+        </div>
+
+
+        <div class="field-grid">
+
+          <label>
+
+            Email
+
+            <input
+              type="email"
+              [value]="profile.email"
+              disabled>
+
+          </label>
+
+
+          <label>
+
+            Phone
+
+            <input
+              type="tel"
+              [disabled]="!isEditing"
+              [(ngModel)]="profile.phone"
+              maxlength="10">
+
+          </label>
+
+
+          <label class="wide">
+
+            Address
+
+            <textarea
+              rows="2"
+              maxlength="500"
+              [disabled]="!isEditing"
+              [(ngModel)]="profile.address">
+            </textarea>
+
+          </label>
+
+        </div>
+
+      </section>
+
+
+      <!-- ACCOUNT INFORMATION -->
+
+      <section class="profile-section profile-section-wide">
+
+        <div class="section-title">
+
+          <span>03</span>
+
+          <h2>Account Information</h2>
+
+        </div>
+
+
+        <div class="field-grid">
+
+          <label>
+
+            User ID
+
+            <input
+              type="text"
+              [value]="profile.id"
+              disabled>
+
+          </label>
+
+
+          <label>
+
+            Role
+
+            <input
+              type="text"
+              [value]="profile.role"
+              disabled>
+
+          </label>
+
+
+          <label>
+
+            Account Status
+
+            <input
+              type="text"
+              [value]="profile.status"
+              disabled>
+
+          </label>
+
+
+          <label>
+
+            Registered On
+
+            <input
+              type="text"
+              [value]="profile.createdAt"
+              disabled>
+
+          </label>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    @if (isEditing) {
+
+      <div class="profile-actions">
+
+        <button
+          class="secondary-button"
+          type="button"
+          (click)="cancelEdit()"
+          [disabled]="saving">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          class="primary-button"
+          type="button"
+          (click)="saveChanges()"
+          [disabled]="saving">
+
+          @if (saving) {
+
+            Saving...
+
+          } @else {
+
+            Save Changes
+
+          }
+
+        </button>
+
+      </div>
+
+    }
+
+  }
+
+</section>

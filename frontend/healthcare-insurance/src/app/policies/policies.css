@@ -1,0 +1,486 @@
+.page-container {
+  width: 100%;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0;
+  color: #172b4d;
+  font-size: 26px;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #7b8794;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SEARCH + FILTER CARD
+   ========================================================= */
+
+.search-filter-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.search-box input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 42px 0 42px;
+  border: 1px solid #d9dee7;
+  border-radius: 9px;
+  outline: none;
+  font-size: 13px;
+  color: #172b4d;
+  background: #ffffff;
+}
+
+.search-box input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+}
+
+.clear-search {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.search-button,
+.filter-button {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.search-button:hover {
+  background: #1d4ed8;
+}
+
+.filter-button {
+  position: relative;
+  border: 1px solid #d9dee7;
+  background: white;
+  color: #334155;
+}
+
+.filter-button:hover,
+.filter-button.active {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   FILTER PANEL
+   ========================================================= */
+
+.filter-panel {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0f3;
+}
+
+.filter-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.filter-title-row h4 {
+  margin: 0;
+  color: #172b4d;
+  font-size: 15px;
+}
+
+.filter-title-row p {
+  margin: 5px 0 0;
+  color: #7b8794;
+  font-size: 12px;
+}
+
+.clear-filter-button {
+  border: none;
+  background: transparent;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.filter-field label {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-field input,
+.filter-field select {
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 11px;
+  border: 1px solid #d9dee7;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  font-size: 12px;
+  outline: none;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: #4f46e5;
+  box-shadow:
+    0 0 0 3px
+    rgba(79, 70, 229, 0.08);
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.apply-filter-button,
+.secondary-button {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.apply-filter-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.apply-filter-button:hover {
+  background: #1d4ed8;
+}
+
+.secondary-button {
+  border: 1px solid #d9dee7;
+  background: white;
+  color: #475569;
+}
+
+
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
+
+.table-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 20px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.table-header h3 {
+  margin: 0;
+  color: #172b4d;
+}
+
+.table-header span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #f8fafc;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 16px;
+  border-top: 1px solid #edf0f3;
+  color: #475569;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+td strong {
+  color: #172b4d;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status.active {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status.approved {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status.expired {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.status.pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.status.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.approve-button,
+.reject-button {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.approve-button {
+  background: #2e7d32;
+}
+
+.approve-button:hover {
+  background: #256b29;
+}
+
+.reject-button {
+  background: #c62828;
+}
+
+.reject-button:hover {
+  background: #a91f1f;
+}
+
+.approve-button:disabled,
+.reject-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.no-action {
+  color: #94a3b8;
+}
+
+
+/* =========================================================
+   EMPTY / ERROR STATE
+   ========================================================= */
+
+.empty-state {
+  padding: 50px 20px;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-state > div {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  margin: 0 0 7px;
+  color: #334155;
+  font-size: 17px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   RETRY BUTTON
+   ========================================================= */
+
+.retry-button {
+  margin-top: 18px;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.retry-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .filter-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-button,
+  .filter-button {
+    width: 100%;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-title-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}

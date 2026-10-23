@@ -1,0 +1,269 @@
+<div class="dashboard-container">
+
+
+  <!-- ===================================================== -->
+  <!-- DASHBOARD HEADER -->
+  <!-- ===================================================== -->
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <h2>
+        Dashboard
+      </h2>
+
+      <p>
+        Overview of your healthcare insurance system
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- STAT CARDS -->
+  <!-- ===================================================== -->
+
+  <div class="stats-grid">
+
+
+    <!-- TOTAL CUSTOMERS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon blue">
+        👥
+      </div>
+
+      <div>
+
+        <span>
+          Total Customers
+        </span>
+
+        <strong>
+          {{ stats.totalCustomers }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- TOTAL POLICIES -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon green">
+        📄
+      </div>
+
+      <div>
+
+        <span>
+          Total Policies
+        </span>
+
+        <strong>
+          {{ stats.totalPolicies }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIVE POLICIES -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon teal">
+        ✓
+      </div>
+
+      <div>
+
+        <span>
+          Active Policies
+        </span>
+
+        <strong>
+          {{ stats.activePolicies }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- PENDING CLAIMS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon orange">
+        ⏳
+      </div>
+
+      <div>
+
+        <span>
+          Pending Claims
+        </span>
+
+        <strong>
+          {{ stats.pendingClaims }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- APPROVED CLAIMS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon purple">
+        ✓
+      </div>
+
+      <div>
+
+        <span>
+          Approved Claims
+        </span>
+
+        <strong>
+          {{ stats.approvedClaims }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- REJECTED CLAIMS -->
+
+    <div class="stat-card">
+
+      <div class="stat-icon red">
+        ✕
+      </div>
+
+      <div>
+
+        <span>
+          Rejected Claims
+        </span>
+
+        <strong>
+          {{ stats.rejectedClaims }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- RECENT ACTIVITY -->
+  <!-- ===================================================== -->
+
+  <div class="activity-card">
+
+
+    <div class="activity-header">
+
+      <div>
+
+        <h3>
+          Recent Activity
+        </h3>
+
+        <p>
+          Latest activity in the system
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- EMPTY STATE -->
+    <!-- =================================================== -->
+
+    @if (recentActivities.length === 0) {
+
+      <div class="empty-activity">
+
+        <div class="empty-icon">
+          📋
+        </div>
+
+        <strong>
+          No recent activity
+        </strong>
+
+        <p>
+          There is no recent activity to display.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- =================================================== -->
+    <!-- ACTIVITY LIST -->
+    <!-- =================================================== -->
+
+    @if (recentActivities.length > 0) {
+
+      <div class="activity-list">
+
+        @for (
+          activity of recentActivities;
+          track activity.activityAt + activity.title
+        ) {
+
+          <div class="activity-item">
+
+
+            <div class="activity-dot">
+            </div>
+
+
+            <div class="activity-content">
+
+              <strong>
+                {{ activity.title }}
+              </strong>
+
+
+              <p>
+                {{ activity.description }}
+              </p>
+
+
+              <span>
+                {{ activity.time }}
+              </span>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

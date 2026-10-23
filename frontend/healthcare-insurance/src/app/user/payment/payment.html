@@ -1,0 +1,337 @@
+<section class="payment-page">
+
+  @if (!paymentComplete) {
+
+    <div class="payment-shell">
+
+      <header class="payment-header">
+
+        <span class="eyebrow">
+          Secure checkout
+        </span>
+
+        <h1>
+          Complete your payment
+        </h1>
+
+        <p>
+          This is a mock payment flow.
+          No real money will be transferred.
+        </p>
+
+      </header>
+
+
+      @if (purchaseError) {
+
+        <div class="error-message">
+
+          {{ purchaseError }}
+
+        </div>
+
+      }
+
+
+      @if (!plan && !purchaseError) {
+
+        <div class="loading-state">
+
+          <div>⏳</div>
+
+          <h3>
+            Loading Policy Plan...
+          </h3>
+
+          <p>
+            Please wait while we load the selected plan.
+          </p>
+
+        </div>
+
+      }
+
+
+      @if (plan) {
+
+        <div class="payment-grid">
+
+          <!-- ORDER SUMMARY -->
+
+          <section class="order-summary">
+
+            <span class="summary-label">
+              Policy selected
+            </span>
+
+            <h2>
+              {{ plan.name }}
+            </h2>
+
+            <p>
+              Policy plan {{ plan.planCode }}
+            </p>
+
+
+            <div class="summary-row">
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                ₹{{ plan.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {{ plan.durationYears }} Year
+              </strong>
+
+            </div>
+
+
+            <div class="summary-row total">
+
+              <span>
+                Annual premium
+              </span>
+
+              <strong>
+                ₹{{ plan.premium | number }}
+              </strong>
+
+            </div>
+
+          </section>
+
+
+          <!-- PAYMENT -->
+
+          <section class="payment-panel">
+
+            <h2>
+              Choose Payment Method
+            </h2>
+
+
+            <div class="method-tabs">
+
+              <button
+                type="button"
+                [class.active]="paymentMethod === 'upi'"
+                (click)="paymentMethod = 'upi'"
+                [disabled]="isProcessing"
+              >
+                UPI ID
+              </button>
+
+
+              <button
+                type="button"
+                [class.active]="paymentMethod === 'qr'"
+                (click)="paymentMethod = 'qr'"
+                [disabled]="isProcessing"
+              >
+                Scan QR
+              </button>
+
+            </div>
+
+
+            @if (paymentMethod === 'upi') {
+
+              <label>
+
+                UPI ID
+
+                <input
+                  type="text"
+                  name="upiId"
+                  [(ngModel)]="upiId"
+                  placeholder="name@bank"
+                  maxlength="100"
+                  [disabled]="isProcessing"
+                />
+
+              </label>
+
+              <small class="input-hint">
+                Example: name@bank
+              </small>
+
+            }
+
+
+            @if (paymentMethod === 'qr') {
+
+              <div
+                class="qr-box"
+                aria-label="Mock QR code"
+              >
+
+                <span>
+                  SCAN
+                </span>
+
+                <strong>
+                  QR
+                </strong>
+
+              </div>
+
+
+              <p class="scan-note">
+                Use any QR scanner for this demo.
+              </p>
+
+            }
+
+
+            <button
+              class="proceed-button"
+              type="button"
+              [disabled]="isProcessing"
+              (click)="proceedToPayment()"
+            >
+
+              @if (isProcessing) {
+
+                Processing...
+
+              } @else {
+
+                Pay ₹{{ plan.premium | number }}
+
+              }
+
+            </button>
+
+          </section>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+
+  <!-- SUCCESS -->
+
+  @if (
+    paymentComplete &&
+    plan
+  ) {
+
+    <section class="success-card">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <span class="eyebrow">
+        Payment complete
+      </span>
+
+      <h1>
+        Policy Purchased Successfully
+      </h1>
+
+      <p>
+        Your mock payment was approved and
+        your policy has been created successfully.
+      </p>
+
+
+      <div class="success-details">
+
+        <div>
+
+          <span>
+            Policy
+          </span>
+
+          <strong>
+            {{ plan.name }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Policy Number
+          </span>
+
+          <strong>
+            {{ policyNumber }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Start Date
+          </span>
+
+          <strong>
+            {{ purchaseDate }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Expiry Date
+          </span>
+
+          <strong>
+            {{ expiryDate }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Status
+          </span>
+
+          <strong>
+            PENDING
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="proceed-button"
+        type="button"
+        (click)="viewPolicy()"
+      >
+        View My Policies
+      </button>
+
+    </section>
+
+  }
+
+</section>

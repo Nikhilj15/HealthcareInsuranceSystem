@@ -1,0 +1,26 @@
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.admin-content {
+  min-height: calc(100vh - 80px);
+  padding: 28px 32px;
+  box-sizing: border-box;
+}
+
+:host {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+
+  .admin-content {
+    padding: 20px;
+  }
+
+}

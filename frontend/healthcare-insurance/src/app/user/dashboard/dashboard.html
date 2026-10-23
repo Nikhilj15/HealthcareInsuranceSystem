@@ -1,0 +1,174 @@
+<div class="user-dashboard">
+
+  <div class="dashboard-header">
+
+    <div>
+      <h1>Welcome, {{ userName }}</h1>
+
+      <p>
+        Choose a healthcare insurance plan that suits your needs.
+      </p>
+    </div>
+
+    <button
+      class="profile-btn"
+      routerLink="/user/profile"
+    >
+      My Profile
+    </button>
+
+  </div>
+
+
+  <div class="section-header">
+
+    <div>
+      <h2>Available Insurance Plans</h2>
+
+      <p>
+        Explore our healthcare insurance plans
+      </p>
+    </div>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="empty-state">
+
+      <div>⏳</div>
+
+      <h3>Loading Insurance Plans...</h3>
+
+      <p>
+        Please wait while we load available plans.
+      </p>
+
+    </div>
+
+  } @else if (errorMessage) {
+
+    <div class="empty-state">
+
+      <div>⚠️</div>
+
+      <h3>Unable to Load Plans</h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        class="details-btn"
+        (click)="loadPolicyPlans()"
+      >
+        Try Again
+      </button>
+
+    </div>
+
+  } @else if (policyPlans.length === 0) {
+
+    <div class="empty-state">
+
+      <div>🏥</div>
+
+      <h3>No Insurance Plans Available</h3>
+
+      <p>
+        There are currently no active insurance plans.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <div class="plans-grid">
+
+      @for (plan of policyPlans; track plan.id) {
+
+        <div class="plan-card">
+
+          <div class="plan-top">
+
+            <div class="plan-icon">
+              🏥
+            </div>
+
+            <span class="status">
+              {{ plan.status }}
+            </span>
+
+          </div>
+
+
+          <h3>
+            {{ plan.name }}
+          </h3>
+
+
+          <p class="description">
+            {{ plan.description }}
+          </p>
+
+
+          <div class="plan-info">
+
+            <div>
+
+              <span>
+                Coverage
+              </span>
+
+              <strong>
+                ₹{{ plan.coverageAmount | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Premium
+              </span>
+
+              <strong>
+                ₹{{ plan.premium | number }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {{ plan.durationYears }} Year
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="details-btn"
+            (click)="viewDetails(plan)"
+          >
+            View Details
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

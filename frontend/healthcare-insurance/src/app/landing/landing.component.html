@@ -1,0 +1,341 @@
+
+<header class="site-header">
+  <a class="brand" routerLink="/" (click)="closeMenu()">
+    <span class="brand-icon">+</span>
+    <span>InsureCare</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    (click)="menuOpen = !menuOpen"
+    [attr.aria-expanded]="menuOpen"
+    aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <nav class="nav-links" [class.open]="menuOpen">
+    <a
+      href="#about"
+      (click)="scrollToSection('about'); $event.preventDefault()">
+      About Us
+    </a>
+
+    <a
+      href="#why-insurecare"
+      (click)="scrollToSection('why-insurecare'); $event.preventDefault()">
+      Why InsureCare
+    </a>
+
+    <a
+      href="#our-plans"
+      (click)="scrollToSection('our-plans'); $event.preventDefault()">
+      Our Plans
+    </a>
+
+    <a
+      routerLink="/login"
+      class="login-btn"
+      (click)="closeMenu()">
+      Login
+    </a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">
+        HEALTHCARE COVERAGE MADE SIMPLE
+      </span>
+
+      <h1>
+        Your Health Deserves
+        <span>Better Protection.</span>
+      </h1>
+
+      <p>
+        Explore healthcare insurance plans designed to help
+        you prepare for life's unexpected medical expenses.
+      </p>
+
+      <div class="hero-actions">
+        <button
+          type="button"
+          class="primary-btn"
+          (click)="scrollToSection('our-plans')">
+          Explore Our Plans
+        </button>
+
+        <a routerLink="/login" class="secondary-btn">
+          Get Started
+        </a>
+      </div>
+
+      <div class="hero-note">
+        <span>✓</span> Simple plan discovery
+        <span>✓</span> Transparent coverage details
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-image">
+        <div class="image-overlay">
+          <span class="image-check">✓</span>
+
+          <div>
+            <strong>Your health comes first</strong>
+            <p>Coverage for greater peace of mind</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section
+    id="about"
+    class="content-section about-section">
+
+    <div class="section-heading">
+      <span class="eyebrow">ABOUT US</span>
+
+      <h2>Healthcare protection, made easier.</h2>
+
+      <p>
+        InsureCare helps people explore available healthcare
+        insurance plans and understand their coverage,
+        benefits and premiums in one convenient place.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY INSURECARE -->
+  <section
+    id="why-insurecare"
+    class="content-section why-section">
+
+    <div class="section-heading">
+      <span class="eyebrow">WHY INSURECARE</span>
+
+      <h2>A simpler way to explore coverage.</h2>
+
+      <p>
+        Find the information you need to make a more informed
+        decision about your healthcare insurance.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature-card">
+        <span class="feature-icon">♡</span>
+
+        <h3>Health-Focused</h3>
+
+        <p>
+          Explore plans created to support different
+          healthcare needs.
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <span class="feature-icon">₹</span>
+
+        <h3>Clear Plan Details</h3>
+
+        <p>
+          Compare available premiums, coverage amounts
+          and benefits.
+        </p>
+      </article>
+
+      <article class="feature-card">
+        <span class="feature-icon">✓</span>
+
+        <h3>Convenient Access</h3>
+
+        <p>
+          Access your account to explore the features
+          available to you.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- OUR PLANS: KEEP ONLY THIS ONE SECTION -->
+  <section
+    id="our-plans"
+    class="content-section plans-section">
+
+    <div class="section-heading">
+      <span class="eyebrow">OUR PLANS</span>
+
+      <h2>Explore our healthcare plans.</h2>
+
+      <p>
+        Plans displayed below are loaded directly from the
+        InsureCare backend. Premiums, coverage, duration
+        and benefits come from the API response.
+      </p>
+    </div>
+
+    <!-- LOADING -->
+    <div
+      class="plans-status"
+      *ngIf="isLoadingPlans"
+      role="status"
+      aria-live="polite">
+
+      <span class="loader"></span>
+
+      <p>Loading available healthcare plans...</p>
+    </div>
+
+    <!-- ERROR -->
+    <div
+      class="plans-status error-message"
+      *ngIf="!isLoadingPlans && plansError"
+      role="alert">
+
+      <p>{{ plansError }}</p>
+
+      <button
+        type="button"
+        class="primary-btn"
+        (click)="retryLoadingPlans()">
+        Try Again
+      </button>
+    </div>
+
+    <!-- PLAN CARDS -->
+    <div
+      class="plans-grid"
+      *ngIf="!isLoadingPlans && !plansError && plans.length > 0">
+
+      <article
+        class="plan-card"
+        *ngFor="let plan of plans">
+
+        <div class="plan-top">
+          <span class="plan-label">
+            {{ plan.planCode }}
+          </span>
+
+          <span class="plan-symbol">+</span>
+        </div>
+
+        <h3>{{ plan.name }}</h3>
+
+        <p class="plan-description">
+          {{ plan.description }}
+        </p>
+
+        <!-- PREMIUM -->
+        <div class="plan-price">
+          <span>Premium</span>
+
+          <strong>
+            {{
+              plan.premium
+                | currency:'INR':'symbol':'1.2-2':'en-IN'
+            }}
+          </strong>
+
+          <small>
+            Duration:
+            {{ plan.durationYears }}
+            {{ plan.durationYears === 1 ? 'year' : 'years' }}
+          </small>
+        </div>
+
+        <!-- COVERAGE -->
+        <div class="coverage-info">
+          <span>Coverage amount</span>
+
+          <strong>
+            {{
+              plan.coverageAmount
+                | currency:'INR':'symbol':'1.0-0':'en-IN'
+            }}
+          </strong>
+        </div>
+
+        <!-- BENEFITS -->
+        <div
+          class="benefits"
+          *ngIf="plan.benefits?.length">
+
+          <h4>Plan benefits</h4>
+
+          <ul>
+            <li *ngFor="let benefit of plan.benefits">
+              <span>✓</span>
+              {{ benefit }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- EXCLUSIONS -->
+        <div
+          class="benefits"
+          *ngIf="plan.exclusions?.length">
+
+          <h4>Plan exclusions</h4>
+
+          <ul>
+            <li *ngFor="let exclusion of plan.exclusions">
+              <span>•</span>
+              {{ exclusion }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- VIEW PLAN -->
+        <a routerLink="/login" class="plan-btn">
+          View Plan
+          <span>→</span>
+        </a>
+
+      </article>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <p
+      class="plans-disclaimer"
+      *ngIf="!isLoadingPlans && !plansError && plans.length > 0">
+
+      Premiums and coverage are displayed as configured
+      in the backend. Review the applicable policy terms
+      before making a purchase.
+    </p>
+
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="cta-section">
+    <span class="eyebrow">TAKE THE NEXT STEP</span>
+
+    <h2>Make healthcare planning simpler.</h2>
+
+    <p>Sign in to access your InsureCare account.</p>
+
+    <a routerLink="/login" class="cta-btn">
+      Login to InsureCare →
+    </a>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <a class="brand footer-brand" routerLink="/">
+    <span class="brand-icon">+</span>
+    <span>InsureCare</span>
+  </a>
+
+  <p>Healthcare coverage made easier.</p>
+
+  <p>
+    © {{ currentYear }} InsureCare. All rights reserved.
+  </p>
+</footer>

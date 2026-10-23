@@ -1,0 +1,288 @@
+<div class="claims-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Claims Management</h1>
+      <p>Review and manage customer insurance claims.</p>
+    </div>
+
+    <button
+      class="refresh-button"
+      type="button"
+      (click)="refreshClaims()"
+      [disabled]="loading">
+
+      Refresh
+
+    </button>
+
+  </div>
+
+
+  <!-- Loading -->
+
+  <div
+    class="state-card"
+    *ngIf="loading">
+
+    <h3>Loading claims...</h3>
+
+    <p>
+      Please wait while claims are being loaded.
+    </p>
+
+  </div>
+
+
+  <!-- Error -->
+
+  <div
+    class="state-card error-card"
+    *ngIf="!loading && errorMessage">
+
+    <h3>Unable to load claims</h3>
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+    <button
+      class="refresh-button"
+      type="button"
+      (click)="refreshClaims()">
+
+      Try Again
+
+    </button>
+
+  </div>
+
+
+  <!-- Claims Table -->
+
+  <div
+    class="claims-card"
+    *ngIf="!loading && !errorMessage">
+
+    <div
+      class="empty-state"
+      *ngIf="claims.length === 0">
+
+      <h3>No claims found</h3>
+
+      <p>
+        There are currently no insurance claims.
+      </p>
+
+    </div>
+
+
+    <div
+      class="table-wrapper"
+      *ngIf="claims.length > 0">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Claim ID</th>
+
+            <th>Customer</th>
+
+            <th>Email</th>
+
+            <th>Policy</th>
+
+            <th>Amount</th>
+
+            <th>Reason</th>
+
+            <th>Submitted Date</th>
+
+            <th>Status</th>
+
+            <th>Rejection Reason</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let claim of claims">
+
+            <!-- Claim -->
+
+            <td>
+
+              <strong>
+                {{ claim.claimNumber }}
+              </strong>
+
+            </td>
+
+
+            <!-- Customer -->
+
+            <td>
+
+              {{ claim.userName }}
+
+            </td>
+
+
+            <!-- Email -->
+
+            <td>
+
+              {{ claim.userEmail }}
+
+            </td>
+
+
+            <!-- Policy -->
+
+            <td>
+
+              {{ claim.policyNumber }}
+
+            </td>
+
+
+            <!-- Amount -->
+
+            <td>
+
+              ₹{{ claim.claimAmount | number:'1.0-2' }}
+
+            </td>
+
+
+            <!-- Reason -->
+
+            <td>
+
+              {{ claim.reason }}
+
+            </td>
+
+
+            <!-- Date -->
+
+            <td>
+
+              {{ claim.claimDate }}
+
+            </td>
+
+
+            <!-- Status -->
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="claim.status.toLowerCase()">
+
+                {{ claim.status }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Rejection Reason -->
+
+            <td>
+
+              <span
+                *ngIf="claim.rejectionReason">
+
+                {{ claim.rejectionReason }}
+
+              </span>
+
+              <span
+                class="no-reason"
+                *ngIf="!claim.rejectionReason">
+
+                —
+
+              </span>
+
+            </td>
+
+
+            <!-- Actions -->
+
+            <td>
+
+              <div
+                class="action-buttons"
+                *ngIf="claim.status === 'PENDING'">
+
+                <button
+                  class="approve-button"
+                  type="button"
+                  [disabled]="processingClaimId === claim.id"
+                  (click)="approveClaim(claim)">
+
+                  {{
+                    processingClaimId === claim.id
+                      ? 'Processing...'
+                      : 'Approve'
+                  }}
+
+                </button>
+
+
+                <button
+                  class="reject-button"
+                  type="button"
+                  [disabled]="processingClaimId === claim.id"
+                  (click)="rejectClaim(claim)">
+
+                  Reject
+
+                </button>
+
+              </div>
+
+
+              <span
+                class="completed-text"
+                *ngIf="claim.status === 'APPROVED'">
+
+                Approved
+
+              </span>
+
+
+              <span
+                class="completed-text rejected-text"
+                *ngIf="claim.status === 'REJECTED'">
+
+                Rejected
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

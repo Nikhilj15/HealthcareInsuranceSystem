@@ -1,0 +1,24 @@
+
+# Angular
+frontend/healthcare-insurance/node_modules/
+frontend/healthcare-insurance/dist/
+frontend/healthcare-insurance/.angular/
+
+# Java / Maven
+backend/healthcare-insurance-api/target/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/application-local.properties
+
+# IDE and OS files
+.metadata/
+**/.settings/
+**/.project
+**/.classpath
+.DS_Store
+Thumbs.db
+
+backend/healthcare-insurance-api/src/main/resources/application.yml
