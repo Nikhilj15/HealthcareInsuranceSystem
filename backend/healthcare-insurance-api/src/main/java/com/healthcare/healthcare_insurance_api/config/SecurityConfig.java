@@ -1,3 +1,4 @@
+
 package com.healthcare.healthcare_insurance_api.config;
 
 import java.util.List;
@@ -26,9 +27,7 @@ public class SecurityConfig {
 
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter) {
-
-        this.jwtAuthenticationFilter =
-                jwtAuthenticationFilter;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -36,26 +35,11 @@ public class SecurityConfig {
             HttpSecurity http) throws Exception {
 
         http
-
-            // ==========================================
-            // CORS
-            // ==========================================
-
-            .cors(cors ->
-                    cors.configurationSource(
-                            corsConfigurationSource()
-                    )
-            )
-
-            // ==========================================
-            // CSRF
-            // ==========================================
+            .cors(cors -> cors.configurationSource(
+                    corsConfigurationSource()
+            ))
 
             .csrf(csrf -> csrf.disable())
-
-            // ==========================================
-            // STATELESS JWT
-            // ==========================================
 
             .sessionManagement(session ->
                     session.sessionCreationPolicy(
@@ -63,77 +47,56 @@ public class SecurityConfig {
                     )
             )
 
-            // ==========================================
-            // AUTHORIZATION
-            // ==========================================
-
             .authorizeHttpRequests(auth -> auth
 
-                // PUBLIC AUTH
-                .requestMatchers(
-                        "/api/auth/**"
-                ).permitAll()
+                // Public authentication APIs
+                .requestMatchers("/api/auth/**").permitAll()
 
                 .requestMatchers(
                         "/api/users/register",
                         "/api/users/check-email"
                 ).permitAll()
 
+                .requestMatchers("/api/health").permitAll()
+
+                // Allow public visitors to view policy plans
                 .requestMatchers(
-                        "/api/health"
+                        HttpMethod.GET,
+                        "/api/policy-plans",
+                        "/api/policy-plans/**"
                 ).permitAll()
 
-             // ======================================
-             // POLICY PLANS
-             // ======================================
+                // Only admins can manage policy plans
+                .requestMatchers(
+                        HttpMethod.POST,
+                        "/api/policy-plans",
+                        "/api/policy-plans/**"
+                ).hasRole("ADMIN")
 
-             // Public visitors can view available plans
-             .requestMatchers(
-                     HttpMethod.GET,
-                     "/api/policy-plans",
-                     "/api/policy-plans/**"
-             ).permitAll()
+                .requestMatchers(
+                        HttpMethod.PUT,
+                        "/api/policy-plans",
+                        "/api/policy-plans/**"
+                ).hasRole("ADMIN")
 
-             // Only admins can create plans
-             .requestMatchers(
-                     HttpMethod.POST,
-                     "/api/policy-plans",
-                     "/api/policy-plans/**"
-             ).hasRole("ADMIN")
+                .requestMatchers(
+                        HttpMethod.DELETE,
+                        "/api/policy-plans",
+                        "/api/policy-plans/**"
+                ).hasRole("ADMIN")
 
-             // Only admins can update plans
-             .requestMatchers(
-                     HttpMethod.PUT,
-                     "/api/policy-plans",
-                     "/api/policy-plans/**"
-             ).hasRole("ADMIN")
-
-             // Only admins can delete plans
-             .requestMatchers(
-                     HttpMethod.DELETE,
-                     "/api/policy-plans",
-                     "/api/policy-plans/**"
-             ).hasRole("ADMIN")
-
-                // ======================================
-                // POLICY PURCHASE
-                // ======================================
-
+                // Policy purchase
                 .requestMatchers(
                         HttpMethod.POST,
                         "/api/policies/purchase"
                 ).hasRole("USER")
 
-                // Keep compatibility with old URL temporarily
                 .requestMatchers(
                         HttpMethod.POST,
                         "/api/policies/purchase/**"
                 ).hasRole("USER")
 
-                // ======================================
-                // USER POLICIES
-                // ======================================
-
+                // User policies
                 .requestMatchers(
                         HttpMethod.GET,
                         "/api/policies/user/**"
@@ -144,10 +107,7 @@ public class SecurityConfig {
                         "/api/policies/*"
                 ).hasAnyRole("USER", "ADMIN")
 
-                // ======================================
-                // ADMIN POLICIES
-                // ======================================
-
+                // Admin policies
                 .requestMatchers(
                         HttpMethod.GET,
                         "/api/policies"
@@ -163,18 +123,10 @@ public class SecurityConfig {
                         "/api/policies/*/reject"
                 ).hasRole("ADMIN")
 
-                // ======================================
-                // ADMIN APIs
-                // ======================================
+                // Admin APIs
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                .requestMatchers(
-                        "/api/admin/**"
-                ).hasRole("ADMIN")
-
-                // ======================================
-                // EVERYTHING ELSE
-                // ======================================
-
+                // All remaining APIs require authentication
                 .anyRequest().authenticated()
             )
 
@@ -186,57 +138,39 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // =================================================
-    // CORS
-    // =================================================
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration configuration =
-                new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(
-                List.of(
-                        "http://localhost:4200"
-                )
-        );
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:4200",
+                "https://healthcareinsurancesystem.onrender.com"
+        ));
 
-        configuration.setAllowedMethods(
-                List.of(
-                        "GET",
-                        "POST",
-                        "PUT",
-                        "DELETE",
-                        "PATCH",
-                        "OPTIONS"
-                )
-        );
+        configuration.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+        ));
 
-        configuration.setAllowedHeaders(
-                List.of("*")
-        );
+        configuration.setAllowedHeaders(List.of("*"));
 
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration(
-                "/**",
-                configuration
-        );
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
 
-    // =================================================
-    // PASSWORD ENCODER
-    // =================================================
-
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }
