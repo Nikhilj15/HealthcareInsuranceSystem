@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -38,7 +38,7 @@ export class AuthService {
 
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = '/api/auth';
+  private readonly apiUrl = 'https://insurecare-backend.onrender.com/api/auth';
   private readonly TOKEN_KEY = 'healthcare_token';
 
   login(
